@@ -1,171 +1,220 @@
-<!doctype html>
-<html class="no-js" lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation for Sites</title>
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/app.css">
-  </head>
-  <body>
-    <div class="grid-container">
-      <div class="grid-x grid-padding-x">
-        <div class="large-12 cell">
-          <h1>Welcome to Foundation</h1>
-        </div>
-      </div>
-
-      <div class="grid-x grid-padding-x">
-        <div class="large-12 cell">
-          <div class="callout">
-            <h3>We&rsquo;re stoked you want to try Foundation! </h3>
-            <p>To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.</p>
-            <p>Once you've exhausted the fun in this document, you should check out:</p>
-            <div class="grid-x grid-padding-x">
-              <div class="large-4 medium-4 cell">
-                <p><a href="http://foundation.zurb.com/docs">Foundation Documentation</a><br />Everything you need to know about using the framework.</p>
-              </div>
-              <div class="large-4 medium-4 cell">
-                <p><a href="http://zurb.com/university/code-skills">Foundation Code Skills</a><br />These online courses offer you a chance to better understand how Foundation works and how you can master it to create awesome projects.</p>
-              </div>
-              <div class="large-4 medium-4 cell">
-                <p><a href="http://foundation.zurb.com/forum">Foundation Forum</a><br />Join the Foundation community to ask a question or show off your knowlege.</p>
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-4 medium-4 medium-push-2 cell">
-                <p><a href="http://github.com/zurb/foundation">Foundation on Github</a><br />Latest code, issue reports, feature requests and more.</p>
-              </div>
-              <div class="large-4 medium-4 medium-pull-2 cell">
-                <p><a href="https://twitter.com/ZURBfoundation">@zurbfoundation</a><br />Ping us on Twitter if you have questions. When you build something with this we'd love to see it (and send you a totally boss sticker).</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid-x grid-padding-x">
-        <div class="large-8 medium-8 cell">
-          <h5>Here&rsquo;s your basic grid:</h5>
-          <!-- Grid Example -->
-
-          <div class="grid-x grid-padding-x">
-            <div class="large-12 cell">
-              <div class="primary callout">
-                <p><strong>This is a twelve cell section in a grid-x.</strong> Each of these includes a div.callout element so you can see where the cell are - it's not required at all for the grid.</p>
-              </div>
-            </div>
-          </div>
-          <div class="grid-x grid-padding-x">
-            <div class="large-6 medium-6 cell">
-              <div class="primary callout">
-                <p>Six cell</p>
-              </div>
-            </div>
-            <div class="large-6 medium-6 cell">
-              <div class="primary callout">
-                <p>Six cell</p>
-              </div>
-            </div>
-          </div>
-          <div class="grid-x grid-padding-x">
-            <div class="large-4 medium-4 small-4 cell">
-              <div class="primary callout">
-                <p>Four cell</p>
-              </div>
-            </div>
-            <div class="large-4 medium-4 small-4 cell">
-              <div class="primary callout">
-                <p>Four cell</p>
-              </div>
-            </div>
-            <div class="large-4 medium-4 small-4 cell">
-              <div class="primary callout">
-                <p>Four cell</p>
-              </div>
-            </div>
-          </div>
-
-          <hr />
-
-          <h5>We bet you&rsquo;ll need a form somewhere:</h5>
-          <form>
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Input Label</label>
-                <input type="text" placeholder="large-12.cell" />
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-4 medium-4 cell">
-                <label>Input Label</label>
-                <input type="text" placeholder="large-4.cell" />
-              </div>
-              <div class="large-4 medium-4 cell">
-                <label>Input Label</label>
-                <input type="text" placeholder="large-4.cell" />
-              </div>
-              <div class="large-4 medium-4 cell">
-                <div class="grid-x">
-                  <label>Input Label</label>
-                  <div class="input-group">
-                    <input type="text" placeholder="small-9.cell" class="input-group-field" />
-                    <span class="input-group-label">.com</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Select Box</label>
-                <select>
-                  <option value="husker">Husker</option>
-                  <option value="starbuck">Starbuck</option>
-                  <option value="hotdog">Hot Dog</option>
-                  <option value="apollo">Apollo</option>
-                </select>
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-6 medium-6 cell">
-                <label>Choose Your Favorite</label>
-                <input type="radio" name="pokemon" value="Red" id="pokemonRed"><label for="pokemonRed">Radio 1</label>
-                <input type="radio" name="pokemon" value="Blue" id="pokemonBlue"><label for="pokemonBlue">Radio 2</label>
-              </div>
-              <div class="large-6 medium-6 cell">
-                <label>Check these out</label>
-                <input id="checkbox1" type="checkbox"><label for="checkbox1">Checkbox 1</label>
-                <input id="checkbox2" type="checkbox"><label for="checkbox2">Checkbox 2</label>
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Textarea Label</label>
-                <textarea placeholder="small-12.cell"></textarea>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <div class="large-4 medium-4 cell">
-          <h5>Try one of these buttons:</h5>
-          <p><a href="#" class="button">Simple Button</a><br/>
-          <a href="#" class="success button">Success Btn</a><br/>
-          <a href="#" class="alert button">Alert Btn</a><br/>
-          <a href="#" class="secondary button">Secondary Btn</a></p>
-          <div class="callout">
-            <h5>So many components, girl!</h5>
-            <p>A whole kitchen sink of goodies comes with Foundation. Check out the docs to see them all, along with details on making them your own.</p>
-            <a href="http://foundation.zurb.com/sites/docs/" class="small button">Go to Foundation Docs</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
-  </body>
-</html>
+<h5>0) Implement the Service Layer for Samples:</h5>
+Data Model for Samples.
+Listing 17-1. Sample Database Schema: /src/main/resources/schema.sql
+<pre><code class="language-sql">
+DROP TABLE IF EXISTS CONTACT;
+CREATE TABLE CONTACT (
+	ID INT NOT NULL AUTO_INCREMENT
+	, FIRST_NAME VARCHAR(60) NOT NULL
+	, LAST_NAME VARCHAR(40) NOT NULL
+	, BIRTH_DATE DATE
+	, DESCRIPTION VARCHAR(2000)
+	, PHOTO BLOB
+	, VERSION INT NOT NULL DEFAULT 0
+	, UNIQUE UQ_CONTACT_1 (FIRST_NAME, LAST_NAME)
+	, PRIMARY KEY (ID)
+);
+</code></pre>
+Listing 17-2. Sample Data Population Script: /src/main/resources/test-data.sql.
+<pre><code class="language-sql">
+insert into contact (first_name, last_name, birth_date) values ('Clarence', 'Ho', '1980-07-30');
+insert into contact (first_name, last_name, birth_date) values ('Scott', 'Tiger', '1990-11-02');
+insert into contact (first_name, last_name, birth_date) values ('John', 'Smith', '1964-02-28');
+insert into contact (first_name, last_name, birth_date) values ('Peter', 'Jackson', '1944-1-10');
+insert into contact (first_name, last_name, birth_date) values ('Jacky', 'Chan', '1955-10-31');
+insert into contact (first_name, last_name, birth_date) values ('Susan', 'Boyle', '1970-05-06');
+insert into contact (first_name, last_name, birth_date) values ('Tinner', 'Turner', '1967-04-30');
+insert into contact (first_name, last_name, birth_date) values ('Lotus', 'Notes', '1990-02-28');
+insert into contact (first_name, last_name, birth_date) values ('Henry', 'Dickson', '1997-06-30');
+insert into contact (first_name, last_name, birth_date) values ('Sam', 'Davis', '2001-01-31');
+insert into contact (first_name, last_name, birth_date) values ('Max', 'Beckham', '2002-02-01');
+insert into contact (first_name, last_name, birth_date) values ('Paul', 'Simon', '2002-02-28');
+</code></pre>
+Implementing and Configuring ContactService
+Implementing ContactService
+Listing 17-3. The Contact Entity Class
+<pre><code class="language-java">
+package com.apress.prospring3.ch17.domain;
+import static javax.persistence.GenerationType.IDENTITY;
+import java.io.Serializable;
+import javax.persistence.*;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+@Entity
+@Table(name = "contact")
+public class Contact implements Serializable {
+	private Long id;
+	private int version;
+	private String firstName;
+	private String lastName;
+	private DateTime birthDate;
+	private String description;
+	private byte[] photo;
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "ID")
+	public Long getId() {
+		return id;
+	}
+	@Version
+	@Column(name = "VERSION")
+	public int getVersion() {
+		return version;
+	}
+	@Column(name = "FIRST_NAME")
+	public String getFirstName() {
+		return firstName;
+	}
+	@Column(name = "LAST_NAME")
+	public String getLastName() {
+		return lastName;
+	}
+	@Column(name = "BIRTH_DATE")
+	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+	@DateTimeFormat(iso=ISO.DATE)
+	public DateTime getBirthDate() {
+		return birthDate;
+	}
+	@Column(name = "DESCRIPTION")
+	public String getDescription() {
+		return description;
+	}
+	@Basic(fetch=FetchType.LAZY)
+	@Lob @Column(name = "PHOTO")
+	public byte[] getPhoto() {
+		return photo;
+	}
+	@Transient
+	public String getBirthDateString() {
+		String birthDateString = "";
+		if (birthDate != null)
+			birthDateString = org.joda.time.format.DateTimeFormat.forPattern("yyyy-MM-dd").print(birthDate);
+		return birthDateString;
+	}
+	public String toString() {
+		return "Contact - Id: " + id + ", First name: " + firstName
+			+ ", Last name: " + lastName + ", Birthday: " + birthDate
+			+ ", Description: " + description;
+	}
+	// Setter methods omitted
+}
+</code></pre>
+Listing 17-4. The ContactService Interface
+<pre><code class="language-java">
+package com.apress.prospring3.ch17.service;
+import java.util.List;
+import com.apress.prospring3.ch17.domain.Contact;
+public interface ContactService {
+	public List<Contact> findAll();
+	public Contact findById(Long id);
+	public Contact save(Contact contact);
+}
+</code></pre>
+Listing 17-5. The ContactRepository Interface
+<pre><code class="language-java">
+package com.apress.prospring3.ch17.repository;
+import org.springframework.data.repository.CrudRepository;
+import com.apress.prospring3.ch17.domain.Contact;
+public interface ContactRepository extends CrudRepository<Contact, Long> {
+}
+</code></pre>
+Listing 17-6. The ContactServiceImpl Class
+<pre><code class="language-java">
+package com.apress.prospring3.ch17.service.jpa;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.apress.prospring3.ch17.domain.Contact;
+import com.apress.prospring3.ch17.repository.ContactRepository;
+import com.apress.prospring3.ch17.service.ContactService;
+import com.google.common.collect.Lists;
+@Service("contactService")
+@Repository
+@Transactional
+public class ContactServiceImpl implements ContactService {
+	@Autowired
+	private ContactRepository contactRepository;
+	@Transactional(readOnly=true)
+	public List<Contact> findAll() {
+		return Lists.newArrayList(contactRepository.findAll());
+	}
+	@Transactional(readOnly=true)
+	public Contact findById(Long id) {
+		return contactRepository.findOne(id);
+	}
+	public Contact save(Contact contact) {
+		return contactRepository.save(contact);
+	}
+}
+</code></pre>
+Configuring ContactService
+Listing 17-7. The datasource-tx-jpa.xml Configuration File: /src/main/resources/datasource-tx-jpa.xml.
+<pre><code class="language-markup">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jdbc
+		http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+		http://www.springframework.org/schema/data/jpa
+		http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.1.xsd"&gt;
+	&lt;jdbc:embedded-database id="dataSource" type="H2"&gt;
+		&lt;jdbc:script location="classpath:schema.sql"/&gt;
+		&lt;jdbc:script location="classpath:test-data.sql"/&gt;
+	&lt;/jdbc:embedded-database&gt;
+	&lt;bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"&gt;
+		&lt;property name="entityManagerFactory" ref="emf"/&gt;
+	&lt;/bean&gt;
+	&lt;tx:annotation-driven transaction-manager="transactionManager" /&gt;
+	&lt;bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"&gt;
+		&lt;property name="dataSource" ref="dataSource" /&gt;
+		&lt;property name="jpaVendorAdapter"&gt;
+			&lt;bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" /&gt;
+		&lt;/property&gt;
+		&lt;property name="packagesToScan" value="com.apress.prospring3.ch17.domain"/&gt;
+		&lt;property name="jpaProperties"&gt;
+			&lt;props&gt;
+				&lt;prop key="hibernate.dialect"&gt;
+					org.hibernate.dialect.H2Dialect
+				&lt;/prop&gt;
+				&lt;prop key="hibernate.max_fetch_depth"&gt;3&lt;/prop&gt;
+				&lt;prop key="hibernate.jdbc.fetch_size"&gt;50&lt;/prop&gt;
+				&lt;prop key="hibernate.jdbc.batch_size"&gt;10&lt;/prop&gt;
+				&lt;prop key="hibernate.show_sql"&gt;true&lt;/prop&gt;
+			&lt;/props&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+	&lt;context:annotation-config/&gt;
+	&lt;jpa:repositories base-package="com.apress.prospring3.ch17.repository"
+			entity-manager-factory-ref="emf"
+			transaction-manager-ref="transactionManager"/&gt;
+&lt;/beans&gt;
+</code></pre>
+Listing 17-8. The root-context.xml File: /src/main/webapp/WEB-INF/spring/root-context.xml
+<pre><code class="language-markup">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd"&gt;
+	&lt;import resource="classpath:datasource-tx-jpa.xml" /&gt;
+	&lt;context:component-scan
+		base-package="com.apress.prospring3.ch17.service.jpa" /&gt;
+&lt;/beans&gt;
+</code></pre>

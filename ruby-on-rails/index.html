@@ -1,172 +1,80 @@
-<pre><code class="language-markup">&lt;!doctype html&gt;
-&lt;html class="no-js" lang="en" dir="ltr"&gt;
-  &lt;head&gt;
-    &lt;meta charset="utf-8"&gt;
-    &lt;meta http-equiv="x-ua-compatible" content="ie=edge"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;Foundation for Sites&lt;/title&gt;
-    &lt;link rel="stylesheet" href="css/foundation.css"&gt;
-    &lt;link rel="stylesheet" href="css/app.css"&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;div class="grid-container"&gt;
-      &lt;div class="grid-x grid-padding-x"&gt;
-        &lt;div class="large-12 cell"&gt;
-          &lt;h1&gt;Welcome to Foundation&lt;/h1&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+<h5>0) Cài đặt Ruby và Rails:</h5>
+Tải Ruby 2.2.x tại http://rubyinstaller.org/downloads/.
+Cài đặt Rails: mở Command Prompt rồi gõ lệnh C:\Users\tri>gem install rails.
+<h5>1) Models:</h5>
+Tạo project blog: C:\PROJECTS>rails new blog.
+<pre><code class="language-batch">
+blog/
+  app/
+  bin/
+  config/
+</code></pre>
+Chạy server: C:\PROJECTS\blog>rails server.
+Mở trình duyệt rồi vào địa chỉ http://localhost:3000/ để xem thông báo của server.
+Tạo controller "Welcome" và action "index": C:\PROJECTS\blog>bin/rails generate controller Welcome index.
+Mở file app/views/welcome/index.html.erb thêm code:
+<pre><code class="language-markup">
+&lt;h1&gt;Hello, Rails!&lt;/h1&gt;
+</code></pre>
+Mở file config/routes.rb thêm code:
+<pre><code class="language-ruby">
+Rails.application.routes.draw do
+  get 'welcome/index'
+  root 'welcome#index'
+end
+</code></pre>
+Chạy lại server rồi vào địa chỉ http://localhost:3000/ sẽ thấy thông báo "Hello, Rails!".
+<h5>2) Resource:</h5>
+Mở file config/routes.rb thêm resource article:
+<pre><code class="language-ruby">
+Rails.application.routes.draw do
+  get 'welcome/index'
+  resources :articles
+  root 'welcome#index'
+end
+</code></pre>
+Chạy lệnh C:\PROJECTS\blog>bin/rails routes ta sẽ thấy các routes của RESTful actions.
+<pre><code class="language-batch">
+      Prefix Verb   URI Pattern                  Controller#Action
+    articles GET    /articles(.:format)          articles#index
+             POST   /articles(.:format)          articles#create
+ new_article GET    /articles/new(.:format)      articles#new
+edit_article GET    /articles/:id/edit(.:format) articles#edit
+     article GET    /articles/:id(.:format)      articles#show
+             PATCH  /articles/:id(.:format)      articles#update
+             PUT    /articles/:id(.:format)      articles#update
+             DELETE /articles/:id(.:format)      articles#destroy
+        root GET    /                            welcome#index
+</code></pre>
+<h5>3) ArticlesController:</h5>
+Tạo controller "ArticlesController": C:\PROJECTS\blog>bin/rails generate controller Articles.
+Mở file app/controllers/articles_controller.rb để thêm các hàm chức năng:
+<pre><code class="language-ruby">
+class ArticlesController < ApplicationController
+  def new
+  end
+end
+</code></pre>
+Tạo file template app/views/articles/new.html.erb cho view thêm mới article:
+<pre><code class="language-markup">
+&lt;h1&gt;New Article&lt;/h1&gt;
+</code></pre>
+<h5>4) Forms:</h5>
+Sửa file template app/views/articles/new.html.erb cho thêm mới article:
+<pre><code class="language-markup">
+&lt;%= form_for :article, url: articles_path do |f| %&gt;
+  &lt;p&gt;
+    &lt;%= f.label :title %&gt;&lt;br&gt;
+    &lt;%= f.text_field :title %&gt;
+  &lt;/p&gt;
 
-      &lt;div class="grid-x grid-padding-x"&gt;
-        &lt;div class="large-12 cell"&gt;
-          &lt;div class="callout"&gt;
-            &lt;h3&gt;We&rsquo;re stoked you want to try Foundation! &lt;/h3&gt;
-            &lt;p&gt;To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.&lt;/p&gt;
-            &lt;p&gt;Once you've exhausted the fun in this document, you should check out:&lt;/p&gt;
-            &lt;div class="grid-x grid-padding-x"&gt;
-              &lt;div class="large-4 medium-4 cell"&gt;
-                &lt;p&gt;&lt;a href="http://foundation.zurb.com/docs"&gt;Foundation Documentation&lt;/a&gt;&lt;br /&gt;Everything you need to know about using the framework.&lt;/p&gt;
-              &lt;/div&gt;
-              &lt;div class="large-4 medium-4 cell"&gt;
-                &lt;p&gt;&lt;a href="http://zurb.com/university/code-skills"&gt;Foundation Code Skills&lt;/a&gt;&lt;br /&gt;These online courses offer you a chance to better understand how Foundation works and how you can master it to create awesome projects.&lt;/p&gt;
-              &lt;/div&gt;
-              &lt;div class="large-4 medium-4 cell"&gt;
-                &lt;p&gt;&lt;a href="http://foundation.zurb.com/forum"&gt;Foundation Forum&lt;/a&gt;&lt;br /&gt;Join the Foundation community to ask a question or show off your knowlege.&lt;/p&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="grid-x grid-padding-x"&gt;
-              &lt;div class="large-4 medium-4 medium-push-2 cell"&gt;
-                &lt;p&gt;&lt;a href="http://github.com/zurb/foundation"&gt;Foundation on Github&lt;/a&gt;&lt;br /&gt;Latest code, issue reports, feature requests and more.&lt;/p&gt;
-              &lt;/div&gt;
-              &lt;div class="large-4 medium-4 medium-pull-2 cell"&gt;
-                &lt;p&gt;&lt;a href="https://twitter.com/ZURBfoundation"&gt;@zurbfoundation&lt;/a&gt;&lt;br /&gt;Ping us on Twitter if you have questions. When you build something with this we'd love to see it (and send you a totally boss sticker).&lt;/p&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+  &lt;p&gt;
+    &lt;%= f.label :text %&gt;&lt;br&gt;
+    &lt;%= f.text_area :text %&gt;
+  &lt;/p&gt;
 
-      &lt;div class="grid-x grid-padding-x"&gt;
-        &lt;div class="large-8 medium-8 cell"&gt;
-          &lt;h5&gt;Here&rsquo;s your basic grid:&lt;/h5&gt;
-          &lt;!-- Grid Example --&gt;
-
-          &lt;div class="grid-x grid-padding-x"&gt;
-            &lt;div class="large-12 cell"&gt;
-              &lt;div class="primary callout"&gt;
-                &lt;p&gt;&lt;strong&gt;This is a twelve cell section in a grid-x.&lt;/strong&gt; Each of these includes a div.callout element so you can see where the cell are - it's not required at all for the grid.&lt;/p&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-          &lt;div class="grid-x grid-padding-x"&gt;
-            &lt;div class="large-6 medium-6 cell"&gt;
-              &lt;div class="primary callout"&gt;
-                &lt;p&gt;Six cell&lt;/p&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="large-6 medium-6 cell"&gt;
-              &lt;div class="primary callout"&gt;
-                &lt;p&gt;Six cell&lt;/p&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-          &lt;div class="grid-x grid-padding-x"&gt;
-            &lt;div class="large-4 medium-4 small-4 cell"&gt;
-              &lt;div class="primary callout"&gt;
-                &lt;p&gt;Four cell&lt;/p&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="large-4 medium-4 small-4 cell"&gt;
-              &lt;div class="primary callout"&gt;
-                &lt;p&gt;Four cell&lt;/p&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="large-4 medium-4 small-4 cell"&gt;
-              &lt;div class="primary callout"&gt;
-                &lt;p&gt;Four cell&lt;/p&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-
-          &lt;hr /&gt;
-
-          &lt;h5&gt;We bet you&rsquo;ll need a form somewhere:&lt;/h5&gt;
-          &lt;form&gt;
-            &lt;div class="grid-x grid-padding-x"&gt;
-              &lt;div class="large-12 cell"&gt;
-                &lt;label&gt;Input Label&lt;/label&gt;
-                &lt;input type="text" placeholder="large-12.cell" /&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="grid-x grid-padding-x"&gt;
-              &lt;div class="large-4 medium-4 cell"&gt;
-                &lt;label&gt;Input Label&lt;/label&gt;
-                &lt;input type="text" placeholder="large-4.cell" /&gt;
-              &lt;/div&gt;
-              &lt;div class="large-4 medium-4 cell"&gt;
-                &lt;label&gt;Input Label&lt;/label&gt;
-                &lt;input type="text" placeholder="large-4.cell" /&gt;
-              &lt;/div&gt;
-              &lt;div class="large-4 medium-4 cell"&gt;
-                &lt;div class="grid-x"&gt;
-                  &lt;label&gt;Input Label&lt;/label&gt;
-                  &lt;div class="input-group"&gt;
-                    &lt;input type="text" placeholder="small-9.cell" class="input-group-field" /&gt;
-                    &lt;span class="input-group-label"&gt;.com&lt;/span&gt;
-                  &lt;/div&gt;
-                &lt;/div&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="grid-x grid-padding-x"&gt;
-              &lt;div class="large-12 cell"&gt;
-                &lt;label&gt;Select Box&lt;/label&gt;
-                &lt;select&gt;
-                  &lt;option value="husker"&gt;Husker&lt;/option&gt;
-                  &lt;option value="starbuck"&gt;Starbuck&lt;/option&gt;
-                  &lt;option value="hotdog"&gt;Hot Dog&lt;/option&gt;
-                  &lt;option value="apollo"&gt;Apollo&lt;/option&gt;
-                &lt;/select&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="grid-x grid-padding-x"&gt;
-              &lt;div class="large-6 medium-6 cell"&gt;
-                &lt;label&gt;Choose Your Favorite&lt;/label&gt;
-                &lt;input type="radio" name="pokemon" value="Red" id="pokemonRed"&gt;&lt;label for="pokemonRed"&gt;Radio 1&lt;/label&gt;
-                &lt;input type="radio" name="pokemon" value="Blue" id="pokemonBlue"&gt;&lt;label for="pokemonBlue"&gt;Radio 2&lt;/label&gt;
-              &lt;/div&gt;
-              &lt;div class="large-6 medium-6 cell"&gt;
-                &lt;label&gt;Check these out&lt;/label&gt;
-                &lt;input id="checkbox1" type="checkbox"&gt;&lt;label for="checkbox1"&gt;Checkbox 1&lt;/label&gt;
-                &lt;input id="checkbox2" type="checkbox"&gt;&lt;label for="checkbox2"&gt;Checkbox 2&lt;/label&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class="grid-x grid-padding-x"&gt;
-              &lt;div class="large-12 cell"&gt;
-                &lt;label&gt;Textarea Label&lt;/label&gt;
-                &lt;textarea placeholder="small-12.cell"&gt;&lt;/textarea&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/form&gt;
-        &lt;/div&gt;
-
-        &lt;div class="large-4 medium-4 cell"&gt;
-          &lt;h5&gt;Try one of these buttons:&lt;/h5&gt;
-          &lt;p&gt;&lt;a href="#" class="button"&gt;Simple Button&lt;/a&gt;&lt;br/&gt;
-          &lt;a href="#" class="success button"&gt;Success Btn&lt;/a&gt;&lt;br/&gt;
-          &lt;a href="#" class="alert button"&gt;Alert Btn&lt;/a&gt;&lt;br/&gt;
-          &lt;a href="#" class="secondary button"&gt;Secondary Btn&lt;/a&gt;&lt;/p&gt;
-          &lt;div class="callout"&gt;
-            &lt;h5&gt;So many components, girl!&lt;/h5&gt;
-            &lt;p&gt;A whole kitchen sink of goodies comes with Foundation. Check out the docs to see them all, along with details on making them your own.&lt;/p&gt;
-            &lt;a href="http://foundation.zurb.com/sites/docs/" class="small button"&gt;Go to Foundation Docs&lt;/a&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-
-    &lt;script src="js/vendor/jquery.js"&gt;&lt;/script&gt;
-    &lt;script src="js/vendor/what-input.js"&gt;&lt;/script&gt;
-    &lt;script src="js/vendor/foundation.js"&gt;&lt;/script&gt;
-    &lt;script src="js/app.js"&gt;&lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
+  &lt;p&gt;
+    &lt;%= f.submit %&gt;
+  &lt;/p&gt;
+&lt;% end %&gt;
 </code></pre>

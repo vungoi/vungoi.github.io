@@ -1,40 +1,171 @@
-<h5>0) Cài đặt Python và Django:</h5>
-Tải Python 2.7.x tại http://www.python.org/download/.
-Cài đặt Django: mở Command Prompt rồi gõ lệnh C:\Users\tri>pip install django.
-<h5>1) Models:</h5>
-Tạo project vungoi: C:\PROJECTS>django-admin startproject vungoi.
-<pre><code class="language-batch">
-vungoi/
+<h3>0) Cài đặt Python và Django</h3>
+Tải Python 2.7.x tại http://www.python.org/download/.<br>
+Cài đặt Django: mở Command Prompt rồi gõ lệnh C:\Users\tri>pip install django. <br>
+<h3>1) Models</h3>
+Tạo project vungoi: C:\PROJECTS>django-admin startproject vungoi. <br>
+<pre><code class="language-batch">vungoi/
     manage.py
     mysite/
         __init__.py
         settings.py
         urls.py
-        wsgi.py
-</code></pre>
-Chạy server: C:\PROJECTS\vungoi>python manage.py runserver.
-Mở trình duyệt rồi vào địa chỉ http://127.0.0.1:8000/ để xem thông báo của server.
-Tạo models polls: C:\PROJECTS\vungoi>python manage.py startapp polls.
-<pre><code class="language-batch">
-polls/
+        wsgi.py</code></pre>
+Chạy server: C:\PROJECTS\vungoi>python manage.py runserver. <br>
+Mở trình duyệt rồi vào địa chỉ http://127.0.0.1:8000/ để xem thông báo của server. <br>
+Tạo models polls: C:\PROJECTS\vungoi>python manage.py startapp polls. <br>
+<pre><code class="language-batch">polls/
     __init__.py
     admin.py
     migrations/
         __init__.py
     models.py
     tests.py
-    views.py
-</code></pre>
-Mở file polls/models.py thêm code:
-<pre><code class="language-python">
-from django.db import models
+    views.py</code></pre>
+Mở file polls/models.py thêm code: <br>
+<pre><code class="language-python">from django.db import models
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
 class Choice(models.Model):
     question = models.ForeignKey(Question)
     choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
-</code></pre>
-Tạo file migration: C:\PROJECTS\vungoi>python manage.py makemigrations.
-Áp dụng cấu trúc bảng vào cơ sở dữ liệu: C:\PROJECTS\vungoi>python manage.py migrate.
+    votes = models.IntegerField(default=0) </code></pre>
+Tạo file migration: C:\PROJECTS\vungoi>python manage.py makemigrations. <br>
+Áp dụng cấu trúc bảng vào cơ sở dữ liệu: C:\PROJECTS\vungoi>python manage.py migrate. <br>
+<h3>2) The admin site</h3>
+Tạo user admin: C:\PROJECTS\vungoi>python manage.py createsuperuser. <br>
+<pre><code class="language-batch">Username: admin
+Email address: admin@example.com
+Password: **********
+Password (again): *********
+Superuser created successfully. </code></pre>
+Chạy server: C:\PROJECTS\vungoi>python manage.py runserver. <br>
+rồi vào địa chỉ http://127.0.0.1:8000/admin/ để quản trị dữ liệu. <br>
+Mở file polls/admin.py để đăng ký Question has multiple Choice: <br>
+<pre><code class="language-python">from django.contrib import admin
+from polls.models import Question
+admin.site.register(Question)
+admin.site.register(Choice) </code></pre>
+<h3>3) Views and templates</h3>
+Mở file polls/views.py để thêm các hàm chức năng: <br>
+<pre><code class="language-python">from django.http import HttpResponse
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+def detail(request, question_id):
+    return HttpResponse("You're looking at question %s." % question_id)
+def results(request, question_id):
+    response = "You're looking at the results of question %s."
+    return HttpResponse(response % question_id)
+def vote(request, question_id):
+    return HttpResponse("You're voting on question %s." % question_id) </code></pre>
+Mở file polls/urls.py để thêm các địa chỉ urls: <br>
+<pre><code class="language-python">from django.conf.urls import patterns, url
+from polls import views
+urlpatterns = patterns('',
+    # ex: /polls/
+    url(r'^$', views.index, name='index'),
+    # ex: /polls/5/
+    url(r'^(?P<question_id>\d+)/$', views.detail, name='detail'),
+    # ex: /polls/5/results/
+    url(r'^(?P<question_id>\d+)/results/$', views.results, name='results'),
+    # ex: /polls/5/vote/
+    url(r'^(?P<question_id>\d+)/vote/$', views.vote, name='vote'),
+) </code></pre>
+Sửa lại hàm index() trong file polls/views.py để hiển thị 5 questions mới nhất: <br>
+<pre><code class="language-python">from django.http import HttpResponse
+from polls.models import Question
+def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    output = ', '.join([p.question_text for p in latest_question_list])
+    return HttpResponse(output)
+# Không thay đổi các hàm (detail, results, vote) </code></pre>
+Tạo file polls/templates/polls/index.html thêm code: <br>
+<pre><code class="language-markup">{% if latest_question_list %}
+    &lt;ul&gt;
+    {% for question in latest_question_list %}
+        &lt;li&gt;&lt;a href="/polls/{{ question.id }}/"&gt;{{ question.question_text }}&lt;/a&gt;&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+{% else %}
+    &lt;p&gt;No polls are available.&lt;/p&gt;
+{% endif %}</code></pre>
+Sửa lại hàm index() trong file polls/views.py để truyền dữ liệu đến template: <br>
+<pre><code class="language-python">from django.http import HttpResponse
+from django.template import RequestContext, loader
+from polls.models import Question
+def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    template = loader.get_template('polls/index.html')
+    context = RequestContext(request, {
+        'latest_question_list': latest_question_list,
+    })
+    return HttpResponse(template.render(context)) </code></pre>
+Thông báo lỗi 404: <br>
+<pre><code class="language-python">from django.http import Http404
+from django.shortcuts import render
+from polls.models import Question
+# ...
+def detail(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, 'polls/detail.html', {'question': question})</code></pre>
+Tạo template file polls/templates/polls/detail.html cho chi tiết question: <br>
+<pre><code class="language-markup">&lt;h1&gt;{{ question.question_text }}&lt;/h1&gt;
+&lt;ul&gt;
+{% for choice in question.choice_set.all %}
+    &lt;li&gt;{{ choice.choice_text }}&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;</code></pre>
+<h3>4) Forms and generic views</h3>
+Sửa template file polls/templates/polls/detail.html cho chi tiết question: <br>
+<pre><code class="language-markup">&lt;h1&gt;{{ question.question_text }}&lt;/h1&gt;
+{% if error_message %}&lt;p&gt;&lt;strong&gt;{{ error_message }}&lt;/strong&gt;&lt;/p&gt;{% endif %}
+&lt;form action="{% url 'polls:vote' question.id %}" method="post"&gt;
+{% csrf_token %}
+{% for choice in question.choice_set.all %}
+    &lt;input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" /&gt;
+    &lt;label for="choice{{ forloop.counter }}"&gt;{{ choice.choice_text }}&lt;/label&gt;&lt;br /&gt;
+{% endfor %}
+&lt;input type="submit" value="Vote" /&gt;
+&lt;/form&gt;</code></pre>
+Thêm vào file polls/urls.py địa chỉ url để nhận dữ liệu submit về: <br>
+<pre><code class="language-python">url(r'^(?P<question_id>\d+)/vote/$', views.vote, name='vote'), </code></pre>
+Hiện thực hàm vote() trong file polls/views.py để xử lý dữ liệu submit về: <br>
+<pre><code class="language-python">from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
+from polls.models import Choice, Question
+# ...
+def vote(request, question_id):
+    p = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = p.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'polls/detail.html', {
+            'question': p,
+            'error_message': "You didn't select a choice.",
+        })
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse('polls:results', args=(p.id,))) </code></pre>
+Sau khi votes cho một question, hàm vote() chuyển đến trang kết quả results():<br>
+<pre><code class="language-python">from django.shortcuts import get_object_or_404, render
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/results.html', {'question': question})</code></pre>
+Tạo template polls/templates/polls/results.html để hiển thị số votes cho mỗi Choice: <br>
+<pre><code class="language-markup">&lt;h1&gt;{{ question.question_text }}&lt;/h1&gt;
+&lt;ul&gt;
+{% for choice in question.choice_set.all %}
+    &lt;li&gt;{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;
+&lt;a href="{% url 'polls:detail' question.id %}"&gt;Vote again?&lt;/a&gt;</code></pre>
+

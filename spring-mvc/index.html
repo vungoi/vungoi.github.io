@@ -1,8 +1,7 @@
-<h5>0) Implement the Service Layer for Samples:</h5>
-Data Model for Samples.
-Listing 17-1. Sample Database Schema: /src/main/resources/schema.sql
-<pre><code class="language-sql">
-DROP TABLE IF EXISTS CONTACT;
+<h3>0) Implement the Service Layer for Samples</h3>
+<h5>Data Model for Samples.</h5>
+Listing 17-1. Sample Database Schema: /src/main/resources/schema.sql<br>
+<pre><code class="language-sql">DROP TABLE IF EXISTS CONTACT;
 CREATE TABLE CONTACT (
 	ID INT NOT NULL AUTO_INCREMENT
 	, FIRST_NAME VARCHAR(60) NOT NULL
@@ -13,11 +12,9 @@ CREATE TABLE CONTACT (
 	, VERSION INT NOT NULL DEFAULT 0
 	, UNIQUE UQ_CONTACT_1 (FIRST_NAME, LAST_NAME)
 	, PRIMARY KEY (ID)
-);
-</code></pre>
-Listing 17-2. Sample Data Population Script: /src/main/resources/test-data.sql.
-<pre><code class="language-sql">
-insert into contact (first_name, last_name, birth_date) values ('Clarence', 'Ho', '1980-07-30');
+); </code></pre>
+Listing 17-2. Sample Data Population Script: /src/main/resources/test-data.sql. <br>
+<pre><code class="language-sql">insert into contact (first_name, last_name, birth_date) values ('Clarence', 'Ho', '1980-07-30');
 insert into contact (first_name, last_name, birth_date) values ('Scott', 'Tiger', '1990-11-02');
 insert into contact (first_name, last_name, birth_date) values ('John', 'Smith', '1964-02-28');
 insert into contact (first_name, last_name, birth_date) values ('Peter', 'Jackson', '1944-1-10');
@@ -28,13 +25,11 @@ insert into contact (first_name, last_name, birth_date) values ('Lotus', 'Notes'
 insert into contact (first_name, last_name, birth_date) values ('Henry', 'Dickson', '1997-06-30');
 insert into contact (first_name, last_name, birth_date) values ('Sam', 'Davis', '2001-01-31');
 insert into contact (first_name, last_name, birth_date) values ('Max', 'Beckham', '2002-02-01');
-insert into contact (first_name, last_name, birth_date) values ('Paul', 'Simon', '2002-02-28');
-</code></pre>
-Implementing and Configuring ContactService
-Implementing ContactService
-Listing 17-3. The Contact Entity Class
-<pre><code class="language-java">
-package com.apress.prospring3.ch17.domain;
+insert into contact (first_name, last_name, birth_date) values ('Paul', 'Simon', '2002-02-28'); </code></pre>
+<h5>Implementing and Configuring ContactService</h5>
+<h6>Implementing ContactService</h6>
+Listing 17-3. The Contact Entity Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.domain;
 import static javax.persistence.GenerationType.IDENTITY;
 import java.io.Serializable;
 import javax.persistence.*;
@@ -99,38 +94,32 @@ public class Contact implements Serializable {
 			+ ", Description: " + description;
 	}
 	// Setter methods omitted
-}
-</code></pre>
-Listing 17-4. The ContactService Interface
-<pre><code class="language-java">
-package com.apress.prospring3.ch17.service;
+}</code></pre>
+Listing 17-4. The ContactService Interface<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.service;
 import java.util.List;
-import com.apress.prospring3.ch17.domain.Contact;
+import com.vungoi.courses.springmvc.domain.Contact;
 public interface ContactService {
 	public List<Contact> findAll();
 	public Contact findById(Long id);
 	public Contact save(Contact contact);
-}
-</code></pre>
-Listing 17-5. The ContactRepository Interface
-<pre><code class="language-java">
-package com.apress.prospring3.ch17.repository;
+}</code></pre>
+Listing 17-5. The ContactRepository Interface<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.repository;
 import org.springframework.data.repository.CrudRepository;
-import com.apress.prospring3.ch17.domain.Contact;
+import com.vungoi.courses.springmvc.domain.Contact;
 public interface ContactRepository extends CrudRepository<Contact, Long> {
-}
-</code></pre>
-Listing 17-6. The ContactServiceImpl Class
-<pre><code class="language-java">
-package com.apress.prospring3.ch17.service.jpa;
+}</code></pre>
+Listing 17-6. The ContactServiceImpl Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.service.jpa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.apress.prospring3.ch17.domain.Contact;
-import com.apress.prospring3.ch17.repository.ContactRepository;
-import com.apress.prospring3.ch17.service.ContactService;
+import com.vungoi.courses.springmvc.domain.Contact;
+import com.vungoi.courses.springmvc.repository.ContactRepository;
+import com.vungoi.courses.springmvc.service.ContactService;
 import com.google.common.collect.Lists;
 @Service("contactService")
 @Repository
@@ -149,12 +138,10 @@ public class ContactServiceImpl implements ContactService {
 	public Contact save(Contact contact) {
 		return contactRepository.save(contact);
 	}
-}
-</code></pre>
-Configuring ContactService
-Listing 17-7. The datasource-tx-jpa.xml Configuration File: /src/main/resources/datasource-tx-jpa.xml.
-<pre><code class="language-markup">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+}</code></pre>
+<h6>Configuring ContactService</h6>
+Listing 17-7. The datasource-tx-jpa.xml Configuration File: /src/main/resources/datasource-tx-jpa.xml. <br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -184,7 +171,7 @@ Listing 17-7. The datasource-tx-jpa.xml Configuration File: /src/main/resources/
 		&lt;property name="jpaVendorAdapter"&gt;
 			&lt;bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" /&gt;
 		&lt;/property&gt;
-		&lt;property name="packagesToScan" value="com.apress.prospring3.ch17.domain"/&gt;
+		&lt;property name="packagesToScan" value="com.vungoi.courses.springmvc.domain"/&gt;
 		&lt;property name="jpaProperties"&gt;
 			&lt;props&gt;
 				&lt;prop key="hibernate.dialect"&gt;
@@ -198,14 +185,12 @@ Listing 17-7. The datasource-tx-jpa.xml Configuration File: /src/main/resources/
 		&lt;/property&gt;
 	&lt;/bean&gt;
 	&lt;context:annotation-config/&gt;
-	&lt;jpa:repositories base-package="com.apress.prospring3.ch17.repository"
+	&lt;jpa:repositories base-package="com.vungoi.courses.springmvc.repository"
 			entity-manager-factory-ref="emf"
 			transaction-manager-ref="transactionManager"/&gt;
-&lt;/beans&gt;
-</code></pre>
-Listing 17-8. The root-context.xml File: /src/main/webapp/WEB-INF/spring/root-context.xml
-<pre><code class="language-markup">
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;/beans&gt;</code></pre>
+Listing 17-8. The root-context.xml File: /src/main/webapp/WEB-INF/spring/root-context.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -215,6 +200,1389 @@ Listing 17-8. The root-context.xml File: /src/main/webapp/WEB-INF/spring/root-co
 		http://www.springframework.org/schema/context/spring-context-3.1.xsd"&gt;
 	&lt;import resource="classpath:datasource-tx-jpa.xml" /&gt;
 	&lt;context:component-scan
-		base-package="com.apress.prospring3.ch17.service.jpa" /&gt;
-&lt;/beans&gt;
-</code></pre>
+		base-package="com.vungoi.courses.springmvc.service.jpa" /&gt;
+&lt;/beans&gt;</code></pre>
+<h3>1) Introducing MVC and Spring MVC</h3>
+<h5>Introducing MVC</h5>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image002.jpg"></p> 
+<h5>Introducing Spring MVC</h5>
+<h6>Spring MVC WebApplicationContext Hierarchy</h6>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image004.jpg"></p> 
+<h6>Spring MVC Request Life Cycle</h6>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image006.jpg"></p> 
+<h6>Spring MVC Configuration</h6>
+Listing 17-9. The Web Deployment Description for Spring MVC: web.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"&gt;
+	&lt;!-- The definition of the Root Spring Container shared by all Servlets and Filters --&gt;
+	&lt;context-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;/WEB-INF/spring/root-context.xml&lt;/param-value&gt;
+	&lt;/context-param&gt;
+	&lt;!-- Spring MVC filters --&gt;
+	&lt;filter&gt;
+		&lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
+		&lt;filter-class&gt;
+			org.springframework.web.filter.CharacterEncodingFilter
+		&lt;/filter-class&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;encoding&lt;/param-name&gt;
+			&lt;param-value&gt;UTF-8&lt;/param-value&gt;
+		&lt;/init-param&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;forceEncoding&lt;/param-name&gt;
+			&lt;param-value&gt;true&lt;/param-value&gt;
+		&lt;/init-param&gt;
+	&lt;/filter&gt;
+	&lt;filter&gt;
+		&lt;filter-name&gt;HttpMethodFilter&lt;/filter-name&gt;
+		&lt;filter-class&gt;
+			org.springframework.web.filter.HiddenHttpMethodFilter
+		&lt;/filter-class&gt;
+	&lt;/filter&gt;
+	&lt;filter&gt;
+		&lt;filter-name&gt;Spring OpenEntityManagerInViewFilter&lt;/filter-name&gt;
+		&lt;filter-class&gt;
+			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter
+		&lt;/filter-class&gt;
+	&lt;/filter&gt;
+	&lt;filter-mapping&gt;
+		&lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
+		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/filter-mapping&gt;
+	&lt;filter-mapping&gt;
+		&lt;filter-name&gt;HttpMethodFilter&lt;/filter-name&gt;
+		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/filter-mapping&gt;
+	&lt;filter-mapping&gt;
+		&lt;filter-name&gt;Spring OpenEntityManagerInViewFilter&lt;/filter-name&gt;
+		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/filter-mapping&gt;
+	&lt;!-- Creates the Spring Container shared by all Servlets and Filters --&gt;
+	&lt;listener&gt;
+		&lt;listener-class&gt;
+			org.springframework.web.context.ContextLoaderListener
+		&lt;/listener-class&gt;
+	&lt;/listener&gt;
+	&lt;!-- Processes application requests --&gt;
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;
+			org.springframework.web.servlet.DispatcherServlet
+		&lt;/servlet-class&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+			&lt;param-value&gt;
+				/WEB-INF/spring/appServlet/servlet-context.xml
+			&lt;/param-value&gt;
+		&lt;/init-param&gt;
+		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;/&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</code></pre>
+<h3>2) Create the First View in Spring MVC</h3>
+<h5>Configure the DispatcherServlet</h5>
+Listing 17-10. The DispatcherServlet Configuration: /src/main/webapp/WEB-INF/spring/appServlet/servletcontext.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd"&gt;
+	&lt;annotation-driven /&gt;
+	&lt;resources mapping="/resources/**" location="/resources/" /&gt;
+	&lt;beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
+		&lt;beans:property name="prefix" value="/WEB-INF/views/" /&gt;
+		&lt;beans:property name="suffix" value=".jspx" /&gt;
+	&lt;/beans:bean&gt;
+	&lt;context:component-scan
+		base-package="com.vungoi.courses.springmvc.web.controller" /&gt;
+&lt;/beans:beans&gt;</code></pre>
+<h5>Implement the ContactController</h5>
+Listing 17-11. The ContactController Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.controller;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import com.vungoi.courses.springmvc.domain.Contact;
+import com.vungoi.courses.springmvc.service.ContactService;
+@RequestMapping("/contacts")
+@Controller
+public class ContactController {
+	final Logger logger = LoggerFactory.getLogger(ContactController.class);
+	@Autowired
+	private ContactService contactService;
+	@RequestMapping(method = RequestMethod.GET)
+	public String list(Model uiModel) {
+		logger.info("Listing contacts");
+		List<Contact> contacts = contactService.findAll();
+		uiModel.addAttribute("contacts", contacts);
+		logger.info("No. of contacts: " + contacts.size());
+		return "contacts/list";
+	}
+}</code></pre>
+<h5>Implement the Contact List View</h5>
+Listing 17-12. The Contact List View: /src/main/webapp/WEB-INF/views/contacts/list.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:joda="http://www.joda.org/joda/time/tags"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8"/&gt;
+	&lt;jsp:output omit-xml-declaration="yes"/&gt;
+	&lt;h1&gt;Contact Listing&lt;/h1&gt;
+	&lt;c:if test="${not empty contacts}"&gt;
+		&lt;table&gt;
+			&lt;thead&gt;
+				&lt;tr&gt;
+					&lt;th&gt;First Name&lt;/th&gt;
+					&lt;th&gt;Last Name&lt;/th&gt;
+					&lt;th&gt;Birth Date&lt;/th&gt;
+				&lt;/tr&gt;
+			&lt;/thead&gt;
+			&lt;tbody&gt;
+				&lt;c:forEach items="${contacts}" var="contact"&gt;
+					&lt;tr&gt;
+						&lt;td&gt;${contact.firstName}&lt;/td&gt;
+						&lt;td&gt;${contact.lastName}&lt;/td&gt;
+						&lt;td&gt;&lt;joda:format value="${contact.birthDate}" pattern="yyyy-MM-
+							dd"/&gt;&lt;/td&gt;
+					&lt;/tr&gt;
+				&lt;/c:forEach&gt;
+			&lt;/tbody&gt;
+		&lt;/table&gt;
+	&lt;/c:if&gt;
+&lt;/div&gt;</code></pre>
+<h5>Testing the Contact List View</h5>
+Mở trình duyệt rồi vào địa chỉ http://localhost:8080/ch17/contacts/ để xem danh sách contact. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image008.jpg"></p> 
+<h3>3) Spring MVC Project Structure Overview</h3>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image010.jpg"></p> 
+<h3>4) i18n (Internationalization)</h3>
+<h5>Configure i18n in DispatcherServlet Configuration</h5>
+Listing 17-13. Revised Servlet Context Configuration: servlet-context.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd"&gt;
+	&lt;annotation-driven /&gt;
+	&lt;resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/&gt;
+	&lt;default-servlet-handler/&gt;
+	&lt;beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
+		&lt;beans:property name="prefix" value="/WEB-INF/views/" /&gt;
+		&lt;beans:property name="suffix" value=".jspx" /&gt;
+	&lt;/beans:bean&gt;
+	&lt;context:component-scan
+		base-package="com.vungoi.courses.springmvc.web.controller" /&gt;
+	&lt;interceptors&gt;
+		&lt;beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+			p:paramName="lang"/&gt;
+	&lt;/interceptors&gt;
+	&lt;beans:bean
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application"
+		p:fallbackToSystemLocale="false"/&gt;
+	&lt;beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
+		id="localeResolver" p:cookieName="locale"/&gt; 
+&lt;/beans:beans&gt;</code></pre>
+<h5>Modify the Contact List View for i18n Support</h5>
+Listing 17-14. Revised Contact List View for i18n: list.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:joda="http://www.joda.org/joda/time/tags"
+	xmlns:spring="http://www.springframework.org/tags"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8"/&gt;
+	&lt;jsp:output omit-xml-declaration="yes"/&gt;
+	&lt;spring:message code="label_contact_list" var="labelContactList"/&gt;
+	&lt;spring:message code="label_contact_first_name" var="labelContactFirstName"/&gt;
+	&lt;spring:message code="label_contact_last_name" var="labelContactLastName"/&gt;
+	&lt;spring:message code="label_contact_birth_date" var="labelContactBirthDate"/&gt;
+	&lt;h1&gt;${labelContactList}&lt;/h1&gt;
+	&lt;c:if test="${not empty contacts}"&gt;
+		&lt;table&gt;
+			&lt;thead&gt;
+				&lt;tr&gt;
+					&lt;th&gt;${labelContactFirstName}&lt;/th&gt;
+					&lt;th&gt;${labelContactLastName}&lt;/th&gt;
+					&lt;th&gt;${labelContactBirthDate}&lt;/th&gt;
+				&lt;/tr&gt;
+			&lt;/thead&gt;
+			&lt;tbody&gt;
+				&lt;c:forEach items="${contacts}" var="contact"&gt;
+					&lt;tr&gt;
+						&lt;td&gt;${contact.firstName}&lt;/td&gt;
+						&lt;td&gt;${contact.lastName}&lt;/td&gt;
+						&lt;td&gt;&lt;joda:format value="${contact.birthDate}" pattern="yyyy-MM-dd"/&gt;&lt;/td&gt;
+					&lt;/tr&gt;
+				&lt;/c:forEach&gt;
+			&lt;/tbody&gt;
+		&lt;/table&gt;
+	&lt;/c:if&gt;
+&lt;/div&gt;</code></pre>
+Mở trình duyệt rồi vào địa chỉ http://localhost:8080/ch17/contacts?lang=zh_HK; để xem danh sách contact với Chinese (HK) locale. Chuyển sang English (US), bạn có thể kèm trong URL của trình duyệt với ?lang=en_US. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image012.jpg"></p> 
+<h3>5) Theming and Templating</h3>
+<h5>Theming Support</h5>
+Listing 17-15. The standard.properties File: /src/main/webapp/WEB-INF/classes/standard.properties<br>
+<pre><code class="language-properties">styleSheet=resources/styles/standard.css</code></pre>
+Listing 17-16. Configure the Theme Interceptor: servlet-context.xml<br>
+<pre><code class="language-markup">&lt;interceptors&gt;
+	&lt;beans:bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/&gt;
+	&lt;beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+		p:paramName="lang"/&gt;
+&lt;/interceptors&gt;</code></pre>
+Listing 17-17. Configure Theme Support: servlet-context.xml<br>
+<pre><code class="language-markup">&lt;beans:bean class="org.springframework.ui.context.support.ResourceBundleThemeSource"
+	id="themeSource"/&gt;
+&lt;beans:bean class="org.springframework.web.servlet.theme.CookieThemeResolver"
+	id="themeResolver" p:cookieName="theme" p:defaultThemeName="standard"/&gt;</code></pre>
+Listing 17-18. Contact List View with Theme Support: /WEB-INF/views/contacts/list.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+	&lt;!-- Other code omitted --&gt;
+	&lt;spring:message code="label_contact_birth_date" var="labelContactBirthDate"/&gt;
+	&lt;head&gt;
+		&lt;spring:theme code="styleSheet" var="app_css" /&gt;
+		&lt;spring:url value="/${app_css}" var="app_css_url" /&gt;
+		&lt;link rel="stylesheet" type="text/css" media="screen" href="${app_css_url}" /&gt;
+	&lt;/head&gt;
+	&lt;h1&gt;${labelContactList}&lt;/h1&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/div&gt;</code></pre>
+Mở trình duyệt rồi vào địa chỉ http://localhost:8080/ch17/contacts/ để xem danh sách contact với style
+định nghĩa trong standard.css được áp dụng. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image014.jpg"></p> 
+<h5>View Templating with Apache Tiles</h5>
+<h6>Template Layout Design</h6>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image016.jpg"></p> 
+Template gồm các thành phần: <br>
+	<pre><code class="language-batch">/WEB-INF/views/header.jspx: header.
+	/WEB-INF/views/menu.jspx: menu trái, với login form.
+	/WEB-INF/views/footer.jspx: footer. </code></pre>
+Dùng Apache Tiles để định nghĩa template, gồm page template file và layout definitions file: <br>
+	<pre><code class="language-batch">/WEB-INF/layouts/default.jspx: layout cho page template.
+	/WEB-INF/layouts/layouts.xml: định nghĩa page layout. </code></pre>
+<h6>Implement Page Layout Components</h6>
+Listing 17-19. Apache Tiles Definition File: src/main/webapp/WEB-INF/layouts.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE tiles-definitions PUBLIC
+		"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+		"http://tiles.apache.org/dtds/tiles-config_2_1.dtd"&gt;
+&lt;tiles-definitions&gt;
+	&lt;definition name="default" template="/WEB-INF/layouts/default.jspx"&gt;
+		&lt;put-attribute name="header" value="/WEB-INF/views/header.jspx" /&gt;
+		&lt;put-attribute name="menu" value="/WEB-INF/views/menu.jspx" /&gt;
+		&lt;put-attribute name="footer" value="/WEB-INF/views/footer.jspx" /&gt;
+	&lt;/definition&gt;
+&lt;/tiles-definitions&gt;</code></pre>
+Listing 17-20. The Default Template File: default.jspx<br>
+<pre><code class="language-markup">&lt;html xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles"
+	xmlns:spring="http://www.springframework.org/tags"&gt;
+	&lt;jsp:output doctype-root-element="HTML" doctype-system="about:legacy-compat" /&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8" /&gt;
+	&lt;jsp:directive.page pageEncoding="UTF-8" /&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+		&lt;meta http-equiv="X-UA-Compatible" content="IE=8" /&gt;
+		&lt;spring:theme code="styleSheet" var="app_css" /&gt;
+		&lt;spring:url value="/${app_css}" var="app_css_url" /&gt;
+		&lt;link rel="stylesheet" type="text/css" media="screen" href="${app_css_url}" /&gt;
+		&lt;!-- Get the user locale from the page context (it was set by Spring MVC's locale
+		resolver) --&gt;
+		&lt;c:set var="userLocale"&gt;
+			&lt;c:set var="plocale"&gt;${pageContext.response.locale}&lt;/c:set&gt;
+			&lt;c:out value="${fn:replace(plocale, '_', '-')}" default="en" /&gt;
+		&lt;/c:set&gt;
+		&lt;spring:message code="application_name" var="app_name" htmlEscape="false"/&gt;
+		&lt;title&gt;&lt;spring:message code="welcome_h3" arguments="${app_name}" /&gt;&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body class="tundra spring"&gt;
+		&lt;div id="headerWrapper"&gt;
+			&lt;tiles:insertAttribute name="header" ignore="true" /&gt;
+		&lt;/div&gt;
+		&lt;div id="wrapper"&gt;
+			&lt;tiles:insertAttribute name="menu" ignore="true" /&gt;
+			&lt;div id="main"&gt;
+				&lt;tiles:insertAttribute name="body"/&gt;
+				&lt;tiles:insertAttribute name="footer" ignore="true"/&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+Listing 17-21. The Header Component (header.jspx) <br>
+<pre><code class="language-markup">&lt;div id="header" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8" /&gt;
+	&lt;jsp:output omit-xml-declaration="yes" /&gt;
+	&lt;spring:message code="header_text" var="headerText"/&gt;
+	&lt;div id="appname"&gt;
+		&lt;h1&gt;${headerText}&lt;/h1&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+Listing 17-22. The Menu Component (menu.jspx) <br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;div id="menu" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8" /&gt;
+	&lt;jsp:output omit-xml-declaration="yes" /&gt;
+	&lt;spring:message code="menu_header_text" var="menuHeaderText"/&gt;
+	&lt;spring:message code="menu_add_contact" var="menuAddContact"/&gt;
+	&lt;spring:url value="/contacts?form" var="addContactUrl"/&gt;
+	&lt;h3&gt;${menuHeaderText}&lt;/h3&gt;
+	&lt;a href="${addContactUrl}"&gt;&lt;h3&gt;${menuAddContact}&lt;/h3&gt;&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+Listing 17-23. The Footer Component (footer.jspx) <br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;div id="footer" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8" /&gt;
+	&lt;jsp:output omit-xml-declaration="yes" /&gt;
+	&lt;spring:message code="home_text" var="homeText"/&gt;
+	&lt;spring:message code="label_en_US" var="labelEnUs"/&gt;
+	&lt;spring:message code="label_zh_HK" var="labelZhHk"/&gt;
+	&lt;spring:url value="/contacts" var="homeUrl"/&gt;
+	&lt;a href="${homeUrl}"&gt;${homeText}&lt;/a&gt; |
+	&lt;a href="${homeUrl}?lang=en_US"&gt;${labelEnUs}&lt;/a&gt; |
+	&lt;a href="${homeUrl}?lang=zh_HK"&gt;${labelZhHk}&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+Listing 17-24. The Revised Contact List View (/views/contacts/list.jspx) <br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:joda="http://www.joda.org/joda/time/tags"
+	xmlns:spring="http://www.springframework.org/tags"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8"/&gt;
+	&lt;jsp:output omit-xml-declaration="yes"/&gt;
+	&lt;spring:message code="label_contact_list" var="labelContactList"/&gt;
+	&lt;spring:message code="label_contact_first_name" var="labelContactFirstName"/&gt;
+	&lt;spring:message code="label_contact_last_name" var="labelContactLastName"/&gt;
+	&lt;spring:message code="label_contact_birth_date" var="labelContactBirthDate"/&gt;
+	&lt;h1&gt;${labelContactList}&lt;/h1&gt;
+	&lt;c:if test="${not empty contacts}"&gt;
+		&lt;table&gt;
+			&lt;thead&gt;
+				&lt;tr&gt;
+					&lt;th&gt;${labelContactFirstName}&lt;/th&gt;
+					&lt;th&gt;${labelContactLastName}&lt;/th&gt;
+					&lt;th&gt;${labelContactBirthDate}&lt;/th&gt;
+				&lt;/tr&gt;
+			&lt;/thead&gt;
+			&lt;tbody&gt;
+				&lt;c:forEach items="${contacts}" var="contact"&gt;
+					&lt;tr&gt;
+						&lt;td&gt;${contact.firstName}&lt;/td&gt;
+						&lt;td&gt;${contact.lastName}&lt;/td&gt;
+						&lt;td&gt;&lt;joda:format value="${contact.birthDate}" pattern="yyyy-MM-dd"/&gt;&lt;/td&gt;
+					&lt;/tr&gt;
+				&lt;/c:forEach&gt;
+			&lt;/tbody&gt;
+		&lt;/table&gt;
+	&lt;/c:if&gt;
+&lt;/div&gt;</code></pre>
+<h6>Configure Tiles in Spring MVC</h6>
+Listing 17-25. Configure Tiles Support in Spring MVC: servletcontext.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+	&lt;!-- Other code omitted --&gt;
+	&lt;!-- Remove the following bean --&gt;
+	&lt;beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
+		&lt;beans:property name="prefix" value="/WEB-INF/views/" /&gt;
+		&lt;beans:property name="suffix" value=".jspx" /&gt;
+	&lt;/beans:bean&gt;
+	&lt;!-- Other code omitted --&gt;
+	&lt;!-- Add the following beans --&gt;
+	&lt;!-- Tiles Configuration --&gt;
+	&lt;beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+		id="tilesViewResolver"&gt;
+		&lt;beans:property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles2.TilesView"/&gt;
+	&lt;/beans:bean&gt;
+	&lt;beans:bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
+		id="tilesConfigurer"&gt;
+		&lt;beans:property name="definitions"&gt;
+			&lt;beans:list&gt;
+				&lt;beans:value&gt;/WEB-INF/layouts/layouts.xml&lt;/beans:value&gt;
+				&lt;!-- Scan views directory for Tiles configurations --&gt;
+				&lt;beans:value&gt;/WEB-INF/views/**/views.xml&lt;/beans:value&gt;
+			&lt;/beans:list&gt;
+		&lt;/beans:property&gt;
+	&lt;/beans:bean&gt;
+&lt;/beans:beans&gt;</code></pre>
+Listing 17-26. The views.xml File: /WEB-INF/views/contacts/views.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+	&lt;!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
+	2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd"&gt;
+&lt;tiles-definitions&gt;
+	&lt;definition extends="default" name="contacts/list"&gt;
+		&lt;put-attribute name="body"
+			value="/WEB-INF/views/contacts/list.jspx" /&gt;
+	&lt;/definition&gt;
+&lt;/tiles-definitions&gt;</code></pre>
+Mở trình duyệt rồi vào địa chỉ http://localhost:8080/ch17/contacts/ để xem danh sách contact bây giờ đã áp dụng template. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image018.jpg"></p> 
+<h3>6) Implement the Views for Contact Information</h3>
+<h5>Mapping of URLs to the Views</h5>
+Table 17-5. Mapping of URLs to Views<br>
+<div class="row">
+  <div class="small-3 large-3 columns">URL</div>
+  <div class="small-3 large-3 columns">HTTP Method</div>
+  <div class="small-3 large-3 columns">Controller Method</div>
+  <div class="small-3 large-3 columns">Description</div>
+</div>
+<div class="row">
+  <div class="small-3 large-3 columns">/contacts</div>
+  <div class="small-3 large-3 columns">GET</div>
+  <div class="small-3 large-3 columns">list()</div>
+  <div class="small-3 large-3 columns">List the contact information.</div>
+</div>
+<div class="row">
+  <div class="small-3 large-3 columns">/contacts/{id}</div>
+  <div class="small-3 large-3 columns">GET</div>
+  <div class="small-3 large-3 columns">show()</div>
+  <div class="small-3 large-3 columns">Display a single contact’s information.</div>
+</div>
+<div class="row">
+  <div class="small-3 large-3 columns">/contacts/{id}?form</div>
+  <div class="small-3 large-3 columns">GET</div>
+  <div class="small-3 large-3 columns">updateForm()</div>
+  <div class="small-3 large-3 columns">Display the edit form for updating an existing contact.</div>
+</div>
+<div class="row">
+  <div class="small-3 large-3 columns">/contacts/{id}?form</div>
+  <div class="small-3 large-3 columns">POST</div>
+  <div class="small-3 large-3 columns">update()</div>
+  <div class="small-3 large-3 columns">Users update the contact information and submit the form. Data will be processed here.</div>
+</div>
+<div class="row">
+  <div class="small-3 large-3 columns">/contacts?form</div>
+  <div class="small-3 large-3 columns">GET</div>
+  <div class="small-3 large-3 columns">createForm()</div>
+  <div class="small-3 large-3 columns">Display the edit form for creating a new contact.</div>
+</div>
+<div class="row">
+  <div class="small-3 large-3 columns">/contacts?form</div>
+  <div class="small-3 large-3 columns">POST</div>
+  <div class="small-3 large-3 columns">create()</div>
+  <div class="small-3 large-3 columns">Users enter contact information and submit the form. Data will be processed here.</div>
+</div>
+<div class="row">
+  <div class="small-3 large-3 columns">/contacts/photo/{id}</div>
+  <div class="small-3 large-3 columns">GET</div>
+  <div class="small-3 large-3 columns">downloadPhoto()</div>
+  <div class="small-3 large-3 columns">Download the photo of a contact.</div>
+</div>
+<h5>Implementing the Show Contact View</h5>
+1. Hiện thực controller method. <br>
+2. Hiện thực show contact view (/views/contacts/show.jspx). <br>
+3. Sửa định nghĩa view (/views/contacts/views.xml). <br>
+Listing 17-27. The show() Method of the ContactController Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.controller;
+// Import statements omitted
+@RequestMapping("/contacts")
+@Controller
+public class ContactController {
+	// Other code omitted
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public String show(@PathVariable("id") Long id, Model uiModel) {
+		Contact contact = contactService.findById(id);
+		uiModel.addAttribute("contact", contact);
+		return "contacts/show";
+	}
+}</code></pre>
+Listing 17-28. The Show Contact View: /views/contacts/show.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:joda="http://www.joda.org/joda/time/tags"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8"/&gt;
+	&lt;jsp:output omit-xml-declaration="yes"/&gt;
+	&lt;spring:message code="label_contact_info" var="labelContactInfo"/&gt;
+	&lt;spring:message code="label_contact_first_name" var="labelContactFirstName"/&gt;
+	&lt;spring:message code="label_contact_last_name" var="labelContactLastName"/&gt;
+	&lt;spring:message code="label_contact_birth_date" var="labelContactBirthDate"/&gt;
+	&lt;spring:message code="label_contact_description" var="labelContactDescription"/&gt;
+	&lt;spring:message code="label_contact_update" var="labelContactUpdate"/&gt;
+	&lt;spring:message code="date_format_pattern" var="dateFormatPattern"/&gt;
+	&lt;spring:url value="/contacts" var="editContactUrl"/&gt;
+	&lt;h1&gt;${labelContactInfo}&lt;/h1&gt;
+	&lt;div id="contactInfo"&gt;
+		&lt;c:if test="${not empty message}"&gt;
+			&lt;div id="message" class="${message.type}"&gt;${message.message}&lt;/div&gt;
+		&lt;/c:if&gt;
+		&lt;table&gt;
+			&lt;tr&gt;
+				&lt;td&gt;${labelContactFirstName}&lt;/td&gt;
+				&lt;td&gt;${contact.firstName}&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td&gt;${labelContactLastName}&lt;/td&gt;
+				&lt;td&gt;${contact.lastName}&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td&gt;${labelContactBirthDate}&lt;/td&gt;
+				&lt;td&gt;&lt;joda:format value="${contact.birthDate}"
+					pattern="${dateFormatPattern}"/&gt;&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td&gt;${labelContactDescription}&lt;/td&gt;
+				&lt;td&gt;${contact.description}&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/table&gt;
+		&lt;a href="${editContactUrl}/${contact.id}?form"&gt;${labelContactUpdate}&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+Listing 17-29. The Show Contact View Mapping: /views/contacts/views.xml<br>
+<pre><code class="language-markup">&lt;definition extends="default" name="contacts/show"&gt;
+	&lt;put-attribute name="body"
+		value="/WEB-INF/views/contacts/show.jspx" /&gt;
+&lt;/definition&gt;</code></pre>
+Listing 17-30. Add the Anchor Link in the List Contact View: /views/contacts/list.jspx<br>
+<pre><code class="language-markup">&lt;spring:url value="/contacts/" var="showContactUrl"/&gt;
+&lt;!-- Other code omitted --&gt;
+	&lt;td&gt;
+		&lt;a href="${showContactUrl}/${contact.id}"&gt;${contact.firstName}&lt;/a&gt;
+	&lt;/td&gt;</code></pre>
+Mở trình duyệt rồi vào địa chỉ http://localhost:8080/ch17/contacts/ để xem danh sách contact bây giờ đã có link xem chi tiết. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image020.jpg"></p> 
+Bấm vào link đi đến show contact view. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image022.jpg"></p> 
+<h5>Implementing the Edit Contact View</h5>
+Listing 17-31. Code Snippet for Update Contact<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.controller;
+// Import statements omitted
+@RequestMapping("/contacts")
+@Controller
+public class ContactController {
+	// Other code omitted
+	@Autowired
+	MessageSource messageSource;
+	@RequestMapping(value = "/{id}", params = "form", method = RequestMethod.POST)
+	public String update(Contact contact, BindingResult bindingResult, Model uiModel,
+		HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+		logger.info("Updating contact");
+		if (bindingResult.hasErrors()) {
+			uiModel.addAttribute("message", new Message("error",
+				messageSource.getMessage("contact_save_fail", new Object[]{}, locale)));
+			uiModel.addAttribute("contact", contact);
+			return "contacts/update";
+		}
+		uiModel.asMap().clear();
+		redirectAttributes.addFlashAttribute("message", new Message("success",
+			messageSource.getMessage("contact_save_success", new Object[]{}, locale)));
+		contactService.save(contact);
+		return "redirect:/contacts/" + UrlUtil.encodeUrlPathSegment(contact.getId().toString(),
+			httpServletRequest);
+	}
+	@RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
+	public String updateForm(@PathVariable("id") Long id, Model uiModel) {
+		uiModel.addAttribute("contact", contactService.findById(id));
+		return "contacts/update";
+	}
+}</code></pre>
+Listing 17-32. The Message Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.form;
+public class Message {
+	private String type;
+	private String message;
+	public Message() {
+	}
+	public Message(String type, String message) {
+		this.type = type;
+		this.message = message;
+	}
+	// Getter/setter method omitted
+}</code></pre>
+Listing 17-33. The UrlUtil Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.util;
+import java.io.UnsupportedEncodingException;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.util.UriUtils;
+import org.springframework.web.util.WebUtils;
+public class UrlUtil {
+	public static String encodeUrlPathSegment(String pathSegment, HttpServletRequest
+		httpServletRequest) {
+		String enc = httpServletRequest.getCharacterEncoding();
+		if (enc == null) {
+			enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
+		}
+		try {
+			pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
+		}
+		catch (UnsupportedEncodingException uee) {}
+		return pathSegment;
+	}
+}</code></pre>
+Listing 17-34. The Edit Contact View: /views/contacts/edit.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8"/&gt;
+	&lt;jsp:output omit-xml-declaration="yes"/&gt;
+	&lt;spring:message code="label_contact_new" var="labelContactNew"/&gt;
+	&lt;spring:message code="label_contact_update" var="labelContactUpdate"/&gt;
+	&lt;spring:message code="label_contact_first_name" var="labelContactFirstName"/&gt;
+	&lt;spring:message code="label_contact_last_name" var="labelContactLastName"/&gt;
+	&lt;spring:message code="label_contact_birth_date" var="labelContactBirthDate"/&gt;
+	&lt;spring:message code="label_contact_description" var="labelContactDescription"/&gt;
+	&lt;spring:message code="label_contact_photo" var="labelContactPhoto"/&gt;
+	&lt;spring:eval expression="contact.id == null ? labelContactNew:labelContactUpdate"
+		var="formTitle"/&gt;
+	&lt;h1&gt;${formTitle}&lt;/h1&gt;
+	&lt;div id="contactUpdate"&gt;
+	&lt;form:form modelAttribute="contact" id="contactUpdateForm" method="post"&gt;
+		&lt;c:if test="${not empty message}"&gt;
+			&lt;div id="message" class="${message.type}"&gt;${message.message}&lt;/div&gt;
+		&lt;/c:if&gt;
+		&lt;form:label path="firstName"&gt;
+			${labelContactFirstName}*
+		&lt;/form:label&gt;
+		&lt;form:input path="firstName" /&gt;
+		&lt;div&gt;
+			&lt;form:errors path="firstName" cssClass="error" /&gt;
+		&lt;/div&gt;
+		&lt;p/&gt;
+		&lt;form:label path="lastName"&gt;
+			${labelContactLastName}*
+		&lt;/form:label&gt;
+		&lt;form:input path="lastName" /&gt;
+		&lt;div&gt;
+			&lt;form:errors path="lastName" cssClass="error" /&gt;
+		&lt;/div&gt;
+		&lt;p/&gt;
+		&lt;form:label path="birthDate"&gt;
+			${labelContactBirthDate}
+		&lt;/form:label&gt;
+		&lt;form:input path="birthDate" id="birthDate"/&gt;
+		&lt;div&gt;
+			&lt;form:errors path="birthDate" cssClass="error" /&gt;
+		&lt;/div&gt;
+		&lt;p/&gt;
+		&lt;form:label path="description"&gt;
+			${labelContactDescription}
+		&lt;/form:label&gt;
+		&lt;form:textarea cols="60" rows="8" path="description" id="contactDescription"/&gt;
+		&lt;div&gt;
+			&lt;form:errors path="description" cssClass="error" /&gt;
+		&lt;/div&gt;
+		&lt;p/&gt;
+		&lt;form:hidden path="version" /&gt;
+		&lt;button type="submit"&gt;Save&lt;/button&gt;
+		&lt;button type="reset"&gt;Reset&lt;/button&gt;
+	&lt;/form:form&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+Listing 17-35. The Edit Contact View Mapping: /views/contacts/views.xml<br>
+<pre><code class="language-markup">&lt;definition extends="default" name="contacts/update"&gt;
+	&lt;put-attribute name="body"
+		value="/WEB-INF/views/contacts/edit.jspx" /&gt;
+&lt;/definition&gt;</code></pre>
+Nhấp vào link Edit Contact trong trang chi tiết contact đi đến trang chỉnh sửa contact. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image024.jpg"></p> 
+Cập nhật thông tin và nhắp button Save. Nếu thành công, bạn sẽ thấy thông điệp thành công, và show contact view sẽ hiển thị. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image026.jpg"></p> 
+<h5>Implementing the Add Contact View</h5>
+Listing 17-36. The Add Contact Methods<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.controller;
+// Import statements omitted
+@RequestMapping("/contacts")
+@Controller
+public class ContactController {
+	// Other code omitted
+	@RequestMapping(params = "form", method = RequestMethod.POST)
+	public String create(Contact contact, BindingResult bindingResult, Model uiModel,
+		HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+		logger.info("Creating contact");
+		if (bindingResult.hasErrors()) {
+			uiModel.addAttribute("message", new Message("error",
+				messageSource.getMessage("contact_save_fail", new Object[]{}, locale)));
+			uiModel.addAttribute("contact", contact);
+			return "contacts/create";
+		}
+		uiModel.asMap().clear();
+		redirectAttributes.addFlashAttribute("message", new Message("success",
+			messageSource.getMessage("contact_save_success", new Object[]{}, locale)));
+		logger.info("Contact id: " + contact.getId());
+		contactService.save(contact);
+		return "redirect:/contacts/" + UrlUtil.encodeUrlPathSegment(contact.getId().toString(),
+			httpServletRequest);
+	}
+	@RequestMapping(params = "form", method = RequestMethod.GET)
+	public String createForm(Model uiModel) {
+		Contact contact = new Contact();
+		uiModel.addAttribute("contact", contact);
+		return "contacts/create";
+	}
+}</code></pre>
+Listing 17-37. The Add Contact View Mapping: /views/contacts/views.xml<br>
+<pre><code class="language-markup">&lt;definition extends="default" name="contacts/create"&gt;
+	&lt;put-attribute name="body"
+		value="/WEB-INF/views/contacts/edit.jspx" /&gt;
+&lt;/definition&gt;</code></pre>
+Nhắp link New Contact, add contact view sẽ hiển thị. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image028.jpg"></p> 
+<h5>Enable JSR-303 Bean Validation</h5>
+Listing 17-38. Applying Constraints to the Contact Domain Object<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.domain;
+// Import statements omitted
+@Entity
+@Table(name = "contact")
+public class Contact implements Serializable {
+	// Other code omitted
+	@NotEmpty(message="{validation.firstname.NotEmpty.message}")
+	@Size(min=3, max=60, message="{validation.firstname.Size.message}")
+	@Column(name = "FIRST_NAME")
+	public String getFirstName() {
+		return firstName;
+	}
+	@NotEmpty(message="{validation.lastname.NotEmpty.message}")
+	@Size(min=1, max=40, message="{validation.lastname.Size.message}")
+	@Column(name = "LAST_NAME")
+	public String getLastName() {
+		return lastName;
+	}
+}</code></pre>
+Listing 17-39. Enable JSR-303 Validation in Controller<br>
+<pre><code class="language-java">public String update(@Valid Contact contact, …
+public String create(@Valid Contact contact, …</code></pre>
+Listing 17-40. Configure JSR-303 Support in Spring MVC: servlet-context.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+	&lt;!-- Other code omitted --&gt;
+	&lt;annotation-driven validator="validator"/&gt;
+	&lt;!-- Other code omitted --&gt;
+	&lt;beans:bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"&gt;
+		&lt;beans:property name="validationMessageSource" ref="messageSource"/&gt;
+	&lt;/beans:bean&gt; 
+&lt;/beans:beans&gt;</code></pre>
+Mở lại trang add contact view, chỉ nhắp button Save. Thông điệp kiểm tra hợp lệ sẽ xuất hiện. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image030.jpg"></p> 
+Chuyển đổi sang ngôn ngữ Chinese (HK), và thao tác tương tự. Lần này, thông điệp sẽ hiển thị bằng Chinese. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image032.jpg"></p> 
+<h3>7) Using jQuery and jQuery UI</h3>
+<h5>Introducing jQuery and jQuery UI</h5>
+<h5>Enable jQuery and jQuery UI in a View</h5>
+/src/main/webapp/scripts/jquery-1.7.1.js: core jQuery JavaScript library. <br>
+/src/main/webapp/scripts/jquery-ui-1.8.16.custom.min.js: This is the jQuery UI library . <br>
+/src/main/webapp/styles/custom-theme/jquery-ui-1.8.16.custom.css: style sheet for the custom theme. <br>
+Listing 17-41. Include jQuery in Template Page: /layouts/default.jspx<br>
+<pre><code class="language-markup">&lt;html xmlns:jsp="http://java.sun.com/JSP/Page"
+	&lt;!-- Other code omitted --&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt;
+		&lt;meta http-equiv="X-UA-Compatible" content="IE=8" /&gt;
+		&lt;spring:theme code="styleSheet" var="app_css" /&gt;
+		&lt;spring:url value="/${app_css}" var="app_css_url" /&gt;
+		&lt;link rel="stylesheet" type="text/css" media="screen" href="${app_css_url}" /&gt;
+		&lt;!-- jQuery and jQuery UI --&gt;
+		&lt;spring:url value="/resources/scripts/jquery-1.7.1.js" var="jquery_url" /&gt;
+		&lt;spring:url value="/resources/scripts/jquery-ui-1.8.16.custom.min.js"
+			var="jquery_ui_url" /&gt;
+		&lt;spring:url value="/resources/styles/custom-theme/jquery-ui-1.8.16.custom.css"
+			var="jquery_ui_theme_css" /&gt;
+		&lt;link rel="stylesheet" type="text/css" media="screen" href="${jquery_ui_theme_css}" /&gt;
+		&lt;script src="${jquery_url}" type="text/javascript"&gt;&lt;jsp:text/&gt;&lt;/script&gt;
+		&lt;script src="${jquery_ui_url}" type="text/javascript"&gt;&lt;jsp:text/&gt;&lt;/script&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/html&gt;</code></pre>
+Listing 17-42. Decorate the Button and Date Picker in the Edit Contact View: /views/contacts/edit.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+	&lt;!-- Other code omitted --&gt;
+	&lt;script type="text/javascript"&gt;
+	$(function(){
+		$('#birthDate').datepicker({
+			dateFormat: 'yy-mm-dd',
+			changeYear: true
+		});
+	});
+	&lt;/script&gt;
+	&lt;!-- Other code omitted --&gt;
+		&lt;button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-
+			button-text-only"&gt;
+			&lt;span class="ui-button-text"&gt;Save&lt;/span&gt;
+		&lt;/button&gt;
+		&lt;button type="reset" class="ui-button ui-widget ui-state-default ui-corner-all ui-
+			button-text-only"&gt;
+			&lt;span class="ui-button-text"&gt;Reset&lt;/span&gt;
+		&lt;/button&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/div&gt;</code></pre>
+Xem lại trang edit, bạn sẽ thấy button với style mới, và khi bạn nhắp vào birth date field, date picker component sẽ hiển thị. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image034.jpg"></p> 
+<h5>Rich-Text Editing with CKEditor</h5>
+Listing 17-43. Add CKEditor to Page Template: default.jspx<br>
+<pre><code class="language-markup">&lt;html xmlns:jsp="http://java.sun.com/JSP/Page"
+	&lt;!-- Other code omitted --&gt;
+	&lt;!-- jQuery and jQuery UI --&gt;
+	&lt;spring:url value="/resources/scripts/jquery-1.7.1.js" var="jquery_url" /&gt;
+	&lt;spring:url value="/resources/scripts/jquery-ui-1.8.16.custom.min.js"
+		var="jquery_ui_url" /&gt;
+	&lt;spring:url value="/resources/styles/custom-theme/jquery-ui-1.8.16.custom.css"
+		var="jquery_ui_theme_css" /&gt;
+	&lt;link rel="stylesheet" type="text/css" media="screen" href="${jquery_ui_theme_css}" /&gt;
+	&lt;script src="${jquery_url}" type="text/javascript"&gt;&lt;jsp:text/&gt;&lt;/script&gt;
+	&lt;script src="${jquery_ui_url}" type="text/javascript"&gt;&lt;jsp:text/&gt;&lt;/script&gt;
+	&lt;!-- CKEditor --&gt;
+	&lt;spring:url value="/resources/ckeditor/ckeditor.js" var="ckeditor_url" /&gt;
+	&lt;spring:url value="/resources/ckeditor/adapters/jquery.js" var="ckeditor_jquery_url" /&gt;
+	&lt;script type="text/javascript" src="${ckeditor_url}"&gt;&lt;jsp:text/&gt;&lt;/script&gt;
+	&lt;script type="text/javascript" src="${ckeditor_jquery_url}"&gt;&lt;jsp:text/&gt;&lt;/script&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/html&gt;</code></pre>
+Listing 17-44. Add CKEditor to Edit Contact View: edit.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+	&lt;!-- Other code omitted --&gt;
+	&lt;script type="text/javascript"&gt;
+	$(function(){
+		$('#birthDate').datepicker({
+			dateFormat: 'yy-mm-dd',
+			changeYear: true
+		});
+		$("#contactDescription").ckeditor(
+			{
+				toolbar : 'Basic',
+				uiColor : '#CCCCCC'
+			}
+		);
+	});
+	&lt;/script&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/div&gt;</code></pre>
+Hiển thị lại trang add contact, description field sẽ hiển thị với rich-text editing hỗ trợ. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image036.jpg"></p> 
+<h5>Data Grid with Pagination using jqGrid</h5>
+<h6>Enable jqGrid in the Contact List View</h6>
+Listing 17-45. Add jqGrid to Page Template: default.jspx<br>
+<pre><code class="language-markup">&lt;html xmlns:jsp="http://java.sun.com/JSP/Page"
+	&lt;!-- Other code omitted --&gt;
+		&lt;!-- CKEditor --&gt;
+		&lt;spring:url value="/resources/ckeditor/ckeditor.js" var="ckeditor_url" /&gt;
+		&lt;spring:url value="/resources/ckeditor/adapters/jquery.js" var="ckeditor_jquery_url" /&gt;
+		&lt;script type="text/javascript" src="${ckeditor_url}"&gt;&lt;jsp:text/&gt;&lt;/script&gt;
+		&lt;script type="text/javascript" src="${ckeditor_jquery_url}"&gt;&lt;jsp:text/&gt;&lt;/script&gt;
+		&lt;!-- jqGrid --&gt;
+		&lt;spring:url value="/resources/jqgrid/css/ui.jqgrid.css" var="jqgrid_css" /&gt;
+		&lt;spring:url value="/resources/jqgrid/js/i18n/grid.locale-en.js"
+			var="jqgrid_locale_url" /&gt;
+		&lt;spring:url value="/resources/jqgrid/js/jquery.jqGrid.min.js" var="jqgrid_url" /&gt;
+		&lt;link rel="stylesheet" type="text/css" media="screen" href="${jqgrid_css}" /&gt;
+		&lt;script type="text/javascript" src="${jqgrid_locale_url}"&gt; &lt;jsp:text/&gt;&lt;/script&gt;
+		&lt;script type="text/javascript" src="${jqgrid_url}"&gt;&lt;jsp:text/&gt;&lt;/script&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/html&gt;</code></pre>
+Listing 17-46. Contact List Page with jqGrid: list.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8"/&gt;
+	&lt;jsp:output omit-xml-declaration="yes"/&gt;
+	&lt;spring:message code="label_contact_list" var="labelContactList"/&gt;
+	&lt;spring:message code="label_contact_first_name" var="labelContactFirstName"/&gt;
+	&lt;spring:message code="label_contact_last_name" var="labelContactLastName"/&gt;
+	&lt;spring:message code="label_contact_birth_date" var="labelContactBirthDate"/&gt;
+	&lt;spring:url value="/contacts/" var="showContactUrl"/&gt;
+	&lt;script type="text/javascript"&gt;
+	$(function(){
+		$("#list").jqGrid({
+			url:'${showContactUrl}/listgrid',
+			datatype: 'json',
+			mtype: 'GET',
+			colNames:['${labelContactFirstName}', '${labelContactLastName}',
+				'${labelContactBirthDate}'],
+			colModel :[
+				{name:'firstName', index:'firstName', width:150},
+				{name:'lastName', index:'lastName', width:100},
+				{name:'birthDateString', index:'birthDate', width:100}
+			],
+			jsonReader : {
+				root:"contactData",
+				page: "currentPage",
+				total: "totalPages",
+				records: "totalRecords",
+				repeatitems: false,
+				id: "id"
+			},
+			pager: '#pager',
+			rowNum:10,
+			rowList:[10,20,30],
+			sortname: 'firstName',
+			sortorder: 'asc',
+			viewrecords: true,
+			gridview: true,
+			height: 250,
+			width: 500,
+			caption: '${labelContactList}',
+			onSelectRow: function(id){
+				document.location.href ="${showContactUrl}/" + id;
+			}
+		});
+	});
+	&lt;/script&gt;
+	&lt;c:if test="${not empty message}"&gt;
+		&lt;div id="message" class="${message.type}"&gt;${message.message}&lt;/div&gt;
+	&lt;/c:if&gt;
+	&lt;h2&gt;${labelContactList}&lt;/h2&gt;
+	&lt;div&gt;
+	&lt;table id="list"&gt;&lt;tr&gt;&lt;td/&gt;&lt;/tr&gt;&lt;/table&gt;
+	&lt;/div&gt;
+	&lt;div id="pager"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<h6>Enable Pagination on the Server Side</h6>
+Listing 17-47. The Revised ContactRepository Interface<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.repository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import com.vungoi.courses.springmvc.domain.Contact;
+public interface ContactRepository extends PagingAndSortingRepository<Contact, Long> {
+}</code></pre>
+Listing 17-48. The Revised ContactService Interface<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.service;
+import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import com.vungoi.courses.springmvc.domain.Contact;
+public interface ContactService {
+	public List<Contact> findAll();
+	public Contact findById(Long id);
+	public Contact save(Contact contact);
+	public Page<Contact> findAllByPage(Pageable pageable);
+}</code></pre>
+Listing 17-49. The Revised ContactServiceImpl Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.service.jpa;
+// Import statements omitted
+@Service("contactService")
+@Repository
+@Transactional
+public class ContactServiceImpl implements ContactService {
+	// Other code omitted
+	@Transactional(readOnly=true)
+	public Page<Contact> findAllByPage(Pageable pageable) {
+		return contactRepository.findAll(pageable);
+	}
+}</code></pre>
+Listing 17-50. The Revised ContactController Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.controller;
+// Import statements omitted
+@RequestMapping("/contacts")
+@Controller
+public class ContactController {
+	// Other code omitted
+	@RequestMapping(value = "/listgrid", method = RequestMethod.GET,
+		produces="application/json")
+	@ResponseBody
+	public ContactGrid listGrid(@RequestParam(value = "page", required = false) Integer page,
+		@RequestParam(value = "rows", required = false) Integer rows,
+		@RequestParam(value = "sidx", required = false) String sortBy,
+		@RequestParam(value = "sord", required = false) String order) {
+		logger.info("Listing contacts for grid with page: {}, rows: {}", page, rows);
+		logger.info("Listing contacts for grid with sort: {}, order: {}", sortBy, order);
+		// Process order by
+		Sort sort = null;
+		String orderBy = sortBy;
+		if (orderBy != null && orderBy.equals("birthDateString"))
+			orderBy = "birthDate";
+		if (orderBy != null && order != null) {
+			if (order.equals("desc")) {
+				sort = new Sort(Sort.Direction.DESC, orderBy);
+			} else
+				sort = new Sort(Sort.Direction.ASC, orderBy);
+		}
+		// Constructs page request for current page
+		// Note: page number for Spring Data JPA starts with 0, while jqGrid starts with 1
+		PageRequest pageRequest = null;
+		if (sort != null) {
+			pageRequest = new PageRequest(page - 1, rows, sort);
+		} else {
+			pageRequest = new PageRequest(page - 1, rows);
+		}
+		Page<Contact> contactPage = contactService.findAllByPage(pageRequest);
+		// Construct the grid data that will return as JSON data
+		ContactGrid contactGrid = new ContactGrid();
+		contactGrid.setCurrentPage(contactPage.getNumber() + 1);
+		contactGrid.setTotalPages(contactPage.getTotalPages());
+		contactGrid.setTotalRecords(contactPage.getTotalElements());
+		contactGrid.setContactData(Lists.newArrayList(contactPage.iterator()));
+		return contactGrid;
+	}
+}</code></pre>
+Listing 17-51. The ContactGrid Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.form;
+import java.util.List;
+import com.vungoi.courses.springmvc.domain.Contact;
+public class ContactGrid {
+	private int totalPages;
+	private int currentPage;
+	private long totalRecords;
+	private List<Contact> contactData;
+	// Getter/setter methods omitted
+}</code></pre>
+Mở trình duyệt rồi vào địa chỉ http://localhost:8080/ch17/contacts/ để xem danh sách contact bây giờ đã áp dụng kỹ thuật Ajax. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image038.jpg"></p> 
+<h3>8) File Upload Handling</h3>
+<h5>Configuring File Upload Support</h5>
+Listing 17-52. Add File Upload Support in web.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	&lt;!-- Other code omitted --&gt;
+	&lt;!-- Processes application requests --&gt;
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+			&lt;param-value&gt;/WEB-INF/spring/appServlet/servlet-context.xml&lt;/param-value&gt;
+		&lt;/init-param&gt;
+		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+		&lt;multipart-config&gt;
+			&lt;max-file-size&gt;5000000&lt;/max-file-size&gt;
+		&lt;/multipart-config&gt;
+	&lt;/servlet&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/web-app&gt;</code></pre>
+Listing 17-53. Configure the MultipartResolver Support in Spring MVC: servlet-context.xml<br>
+<pre><code class="language-markup">&lt;beans:bean
+	class="org.springframework.web.multipart.support.StandardServletMultipartResolver"
+	id="multipartResolver"/&gt;</code></pre>
+<h5>Modify Views for File Upload Support</h5>
+Listing 17-54. Edit Contact View for File Upload Support: edit.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+	&lt;!-- Other code omitted --&gt;
+	&lt;form:form modelAttribute="contact" id="contactUpdateForm" method="post"
+		enctype="multipart/form-data"&gt;
+		&lt;!-- Other code omitted --&gt;
+		&lt;form:label path="description"&gt;
+			${labelContactDescription}
+		&lt;/form:label&gt;
+		&lt;form:textarea cols="60" rows="8" path="description" id="contactDescription"/&gt;
+		&lt;div&gt;
+			&lt;form:errors path="description" cssClass="error" /&gt;
+		&lt;/div&gt;
+		&lt;p/&gt;
+		&lt;label for="file"&gt;
+			${labelContactPhoto}
+		&lt;/label&gt;
+		&lt;input name="file" type="file"/&gt;
+		&lt;p/&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/div&gt;</code></pre>
+Listing 17-55. Show Contact View for Display File: show.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+	&lt;!-- Other code omitted --&gt;
+	&lt;spring:message code="label_contact_photo" var="labelContactPhoto"/&gt;
+	&lt;spring:url value="/contacts/photo" var="contactPhotoUrl"/&gt;
+	&lt;!-- Other code omitted --&gt;
+		&lt;tr&gt;
+			&lt;td&gt;${labelContactDescription}&lt;/td&gt;
+			&lt;td&gt;${contact.description}&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;td&gt;${labelContactPhoto}&lt;/td&gt;
+			&lt;td&gt;&lt;img src="${contactPhotoUrl}/${contact.id}"&gt;&lt;/img&gt;&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/div&gt;</code></pre>
+<h5>Modify Controller for File Upload Support</h5>
+Listing 17-56. Revised Controller Class with File Upload and Download Support<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.controller;
+import javax.servlet.http.Part;
+// Other import statements omitted
+@RequestMapping("/contacts")
+@Controller
+public class ContactController {
+	@RequestMapping(method = RequestMethod.POST)
+	public String create(@Valid Contact contact, BindingResult bindingResult, Model uiModel,
+		HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale,
+		@RequestParam(value="file", required=false) Part file) {
+		logger.info("Creating contact");
+		if (bindingResult.hasErrors()) {
+			uiModel.addAttribute("message", new Message("error",
+				messageSource.getMessage("contact_save_fail", new Object[]{}, locale)));
+			uiModel.addAttribute("contact", contact);
+			return "contacts/create";
+		}
+		uiModel.asMap().clear();
+		redirectAttributes.addFlashAttribute("message", new Message("success",
+			messageSource.getMessage("contact_save_success", new Object[]{}, locale)));
+		logger.info("Contact id: " + contact.getId());
+		// Process upload file
+		if (file != null) {
+			logger.info("File name: " + file.getName());
+			logger.info("File size: " + file.getSize());
+			logger.info("File content type: " + file.getContentType());
+			byte[] fileContent = null;
+			try {
+				InputStream inputStream = file.getInputStream();
+				if (inputStream == null) logger.info("File inputstream is null");
+				fileContent = IOUtils.toByteArray(inputStream);
+				contact.setPhoto(fileContent);
+			} catch (IOException ex) {
+				logger.error("Error saving uploaded file");
+			}
+			contact.setPhoto(fileContent);
+		}
+		contactService.save(contact);
+		return "redirect:/contacts/" +
+			UrlUtil.encodeUrlPathSegment(contact.getId().toString(), httpServletRequest);
+	}
+	@RequestMapping(value = "/photo/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public byte[] downloadPhoto(@PathVariable("id") Long id) {
+		Contact contact = contactService.findById(id);
+		if (contact.getPhoto() != null) {
+			logger.info("Downloading photo for id: {} with size: {}", contact.getId(),
+				contact.getPhoto().length);
+		}
+		return contact.getPhoto();
+	}
+}</code></pre>
+Kiểm tra chức năng file upload, load lại trang và thêm contact mới với photo, được hiển thị như sau. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image040.jpg"></p> 
+Sau khi hoàn thành, bạn sẽ thấy photo trong show view, được hiển thị như sau. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image042.jpg"></p> 
+<h3>9) Securing a Web Application with Spring Security</h3>
+<h5>Configuring Spring Security</h5>
+Listing 17-57. Configure Spring Security Filter: web.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	&lt;!-- Other code omitted --&gt;
+	&lt;!-- Spring Security Configuration --&gt;
+	&lt;filter&gt;
+		&lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+		&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;
+	&lt;/filter&gt;
+	&lt;filter-mapping&gt;
+		&lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/filter-mapping&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/web-app&gt;</code></pre>
+Listing 17-58. Spring Security Context Configuration: /WEB-INF/spring/security-context.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd"&gt;
+	&lt;http use-expressions="true"&gt;
+		&lt;intercept-url pattern='/*' access='permitAll' /&gt;
+		&lt;form-login login-page="/contacts" authentication-failure-url="/security/loginfail"
+			default-target-url="/contacts" /&gt;
+		&lt;logout logout-success-url="/contacts"/&gt;
+	&lt;/http&gt;
+	&lt;authentication-manager&gt;
+		&lt;authentication-provider&gt;
+			&lt;user-service&gt;
+				&lt;user name="user" password="user" authorities="ROLE_USER" /&gt;
+			&lt;/user-service&gt;
+		&lt;/authentication-provider&gt;
+	&lt;/authentication-manager&gt;
+&lt;/beans:beans&gt;</code></pre>
+Listing 17-59. Spring Security Context Configuration: root-context.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	&lt;!-- Other code omitted --&gt;
+	&lt;import resource="classpath:datasource-tx-jpa.xml" /&gt;
+	&lt;import resource="security-context.xml"/&gt;
+	&lt;context:component-scan base-package="com.vungoi.courses.springmvc.service.jpa"/&gt;
+&lt;/beans&gt;</code></pre>
+<h5>Adding Login Functions to the Application</h5>
+Listing 17-60. Display Login User Information: header.jspx<br>
+<pre><code class="language-markup">&lt;div id="header" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8" /&gt;
+	&lt;jsp:output omit-xml-declaration="yes" /&gt;
+	&lt;spring:message code="header_text" var="headerText"/&gt;
+	&lt;spring:message code="label_logout" var="labelLogout"/&gt;
+	&lt;spring:message code="label_welcome" var="labelWelcome"/&gt;
+	&lt;spring:url var="logoutUrl" value="/j_spring_security_logout" /&gt;
+	&lt;div id="appname"&gt;
+		&lt;h1&gt;${headerText}&lt;/h1&gt;
+	&lt;/div&gt;
+	&lt;div id="userinfo"&gt;
+		&lt;sec:authorize access="isAuthenticated()"&gt;${labelWelcome}
+			&lt;sec:authentication property="principal.username" /&gt;
+			&lt;br/&gt;
+			&lt;a href="${logoutUrl}"&gt;${labelLogout}&lt;/a&gt;
+		&lt;/sec:authorize&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+Listing 17-61. Display Login Form: menu.jspx<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+&lt;div id="menu" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	version="2.0"&gt;
+	&lt;jsp:directive.page contentType="text/html;charset=UTF-8" /&gt;
+	&lt;jsp:output omit-xml-declaration="yes" /&gt;
+	&lt;spring:message code="menu_header_text" var="menuHeaderText"/&gt;
+	&lt;spring:message code="menu_add_contact" var="menuAddContact"/&gt;
+	&lt;spring:url value="/contacts?form" var="addContactUrl"/&gt;
+	&lt;spring:message code="label_login" var="labelLogin"/&gt;
+	&lt;spring:url var="loginUrl" value="/j_spring_security_check" /&gt;
+	&lt;h3&gt;${menuHeaderText}&lt;/h3&gt;
+	&lt;sec:authorize access="hasRole('ROLE_USER')"&gt;
+		&lt;a href="${addContactUrl}"&gt;&lt;h3&gt;${menuAddContact}&lt;/h3&gt;&lt;/a&gt;
+	&lt;/sec:authorize&gt;
+	&lt;sec:authorize access="isAnonymous()"&gt;
+	&lt;div id="login"&gt;
+		&lt;form name="loginForm" action="${loginUrl}" method="post"&gt;
+			&lt;table&gt;
+				&lt;caption align="left"&gt;Login:&lt;/caption&gt;
+				&lt;tr&gt;
+					&lt;td&gt;User Name:&lt;/td&gt;
+					&lt;td&gt;&lt;input type="text" name="j_username"/&gt;&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td&gt;Password:&lt;/td&gt;
+					&lt;td&gt;&lt;input type="password" name="j_password"/&gt;&lt;/td&gt;
+				&lt;/tr&gt;
+				&lt;tr&gt;
+					&lt;td colspan="2" align="center"&gt;&lt;input name="submit" type="submit"
+						value="Login"/&gt;&lt;/td&gt;
+				&lt;/tr&gt;
+			&lt;/table&gt;
+		&lt;/form&gt;
+	&lt;/div&gt;
+	&lt;/sec:authorize&gt;
+&lt;/div&gt;</code></pre>
+Mở lại trang, khi đó nó sẽ hiển thị login form. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image044.jpg"></p> 
+Nhập user cho user name và password fields rồi nhắp Login button. Thông tin user sẽ hiển thị trong vùng header. New contact link cũng được hiển thị. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image046.jpg"></p> 
+Listing 17-62. The SecurityController Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.controller;
+// Import statements omitted
+@RequestMapping("/security")
+@Controller
+public class SecurityController {
+	final Logger logger = LoggerFactory.getLogger(SecurityController.class);
+	@Autowired
+	private MessageSource messageSource;
+	@RequestMapping("/loginfail")
+	public String loginFail(Model uiModel, Locale locale) {
+		logger.info("Login failed detected");
+		uiModel.addAttribute("message", new Message("error",
+			messageSource.getMessage("message_login_fail", new Object[]{}, locale)));
+		return "contacts/list";
+	}
+}</code></pre>
+Bây giờ mở lại page và nhập sai thông tin user; trang home page sẽ hiển thị lại với thông điệp login fail. <br>
+<p class="text-center"><img src= "https://vungoi.github.io/spring-mvc/image048.jpg"></p> 
+<h5>Using Annotations to Secure Controller Methods</h5>
+Ẩn link new contact trong menu thì chưa đủ. Nếu bạn nhập trực tiếp URL trong địa chỉ browser (http://localhost:8080/ch17/contacts?form), bạn vẫn thấy add contact page, thậm chí rằng bạn chưa logged in. Để giải quyết vấn đề này cần áp dụng bảo mật ở mức controller method. <br>
+Listing 17-63. Enable Method-Level Security: servletcontext.xml<br>
+<pre><code class="language-markup">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd"&gt;
+	&lt;!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -
+	-&gt;
+	&lt;!-- Enables the Spring MVC @Controller programming model --&gt;
+	&lt;annotation-driven validator="validator"/&gt;
+	&lt;!-- Enable controller method level security --&gt;
+	&lt;security:global-method-security pre-post-annotations="enabled"/&gt;
+	&lt;!-- Other code omitted --&gt;
+&lt;/beans:beans&gt;</code></pre>
+Listing 17-64. Applying Spring Security Annotations<br>
+<pre><code class="language-java">@PreAuthorize("isAuthenticated()")
+@RequestMapping(params = "form", method = RequestMethod.GET)
+public String createForm(Model uiModel) {
+	Contact contact = new Contact();
+	uiModel.addAttribute("contact", contact);
+	return "contacts/create";
+}</code></pre>
+<h3>10) Support for Servlet 3 Code-Based Configuration</h3>
+Listing 17-65. Remove the Following Servlet Definition from web.xml<br>
+<pre><code class="language-markup">&lt;servlet&gt;
+	&lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;/WEB-INF/spring/appServlet/servlet-context.xml&lt;/param-value&gt;
+	&lt;/init-param&gt;
+	&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+	&lt;multipart-config&gt;
+		&lt;max-file-size&gt;5000000&lt;/max-file-size&gt;
+	&lt;/multipart-config&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</code></pre>
+Listing 17-66. The MyWebAppInitializer Class<br>
+<pre><code class="language-java">package com.vungoi.courses.springmvc.web.init;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.XmlWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
+public class MyWebAppInitializer implements WebApplicationInitializer {
+	@Override
+	public void onStartup(ServletContext container) throws ServletException {
+		XmlWebApplicationContext appContext = new XmlWebApplicationContext();
+		appContext.setConfigLocation("/WEB-INF/spring/appServlet/servlet-context.xml");
+		ServletRegistration.Dynamic dispatcher =
+			container.addServlet("appServlet", new DispatcherServlet(appContext));
+		MultipartConfigElement multipartConfigElement =
+			new MultipartConfigElement(null, 5000000, 5000000, 0);
+		dispatcher.setMultipartConfig(multipartConfigElement);
+		dispatcher.setLoadOnStartup(1);
+		dispatcher.addMapping("/");
+	}
+}</code></pre>
+
